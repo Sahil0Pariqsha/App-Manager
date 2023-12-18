@@ -6,3 +6,8 @@ type FormDataErrors = {
   wrongPassword?: string | null;
   userId?: string | null;
 };
+
+type AddTaskFromErrors = {
+  title?: string | null;
+  description?: string | null;
+}

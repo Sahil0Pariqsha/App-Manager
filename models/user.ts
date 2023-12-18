@@ -5,6 +5,7 @@ const user = new mongoose.Schema(
     name: {
       type: String,
       required: true,
+      trim: true,
     },
     email: {
       type: String,
@@ -18,4 +19,4 @@ const user = new mongoose.Schema(
   { timestamps: true }
 );
 
-export default mongoose.models.user || mongoose.model("user", user);
+export default mongoose.models["users"] || mongoose.model("users", user);

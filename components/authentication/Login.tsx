@@ -5,13 +5,13 @@ import { handleLogInAction } from "@/lib/actions";
 import { useFormState } from "react-dom";
 
 const Login = ({ setLoginForm }: any) => {
+
   const initialFromErrorsState: FormDataErrors = {
     name: null,
     confirm_password: null,
     email: null,
     userExist: null,
     wrongPassword: null,
-    userId: null,
   };
 
   const [state, fromAction] = useFormState(
@@ -84,11 +84,11 @@ const Login = ({ setLoginForm }: any) => {
         >
           Log in
         </button>
-        <div className="-mt-4 flex justify-between text-[16px]">
+        {/* <div className="-mt-4 flex justify-between text-[16px]">
           <p className="text-green-400">
             {state.userId && "User Login Successful"}
           </p>
-        </div>
+        </div> */}
       </form>
       <div className="w-fit mx-auto text-[#5F5F5F] font-Poppins mt-10">
         Don&apos;t have an account ?

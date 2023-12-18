@@ -3,36 +3,17 @@ import user from "@/models/user";
 import { redirect } from "next/navigation";
 import bcrypt from "bcryptjs";
 import { cookies } from "next/headers";
+import dbConnect from "./dbconnect";
+import {
+  emailIsValid,
+  extractTokenPayload,
+  fullNameIsValid,
+  generateToken,
+  hashPassword,
+} from "@/utils/functions";
+import userTasks from "@/models/userTasks";
 
-/*------- Input Validations -------*/
-/*------- Global Scoped for using the same fun in Login Action as well -------*/
-var emailIsValid = (email: FormDataEntryValue | null) => {
-  const tempEmail = email?.toString().trim();
-  const regexEmail =
-    /^[a-zA-Z0-9]+([._-]?[a-zA-Z0-9]+)*@[a-zA-Z0-9]+\.[a-zA-Z]{2,}$/;
-
-  if (tempEmail !== undefined) return regexEmail.test(tempEmail);
-};
-var fullNameIsValid = (name: FormDataEntryValue | null) => {
-  const tempName = name?.toString();
-  const regexName = /[0-9@#$%^&*()\-_]+/;
-  const regexSpaces = /^\s+$/;
-
-  if (tempName !== undefined)
-    return !regexName.test(tempName) && !regexSpaces.test(tempName);
-};
-
-var hashPassword = async (password: FormDataEntryValue | null) => {
-  const tempPassword = password?.toString();
-
-  let hashedPassword;
-  if (tempPassword) {
-    hashedPassword = await bcrypt.hash(tempPassword, 10);
-  }
-
-  return hashedPassword;
-};
-/*------- Input Validations End -------*/
+dbConnect();
 
 /*------- Sign Up user Action -------*/
 export const handleSignUpAction = async (
@@ -74,36 +55,29 @@ export const handleSignUpAction = async (
     return { ...prevState, ...errors };
   }
 
-  /*------- Add User to DB -------*/
-  const filterName = (name: any) => {
-    name = name.replace(/(^\s*)|(\s*$)/gi, "");
-    name = name.replace(/[ ]{2,}/gi, " ");
-    name = name.replace(/\n /, "\n");
-    return name;
-  };
-
   const hashedPassword = await hashPassword(Password);
 
   const userData = {
-    name: filterName(Name?.toString()),
+    name: Name?.toString()
+      .toLowerCase()
+      .replace(/(?:^|\s)\S/g, (char: any) => char.toUpperCase()),
     email: Email?.toString().toLowerCase(),
     password: hashedPassword,
   };
 
-  // await db.collection("users").insertOne({ ...userData });
   await user.create(userData);
-  /*------- Add User to DB End-------*/
 
   console.log("Signup Successful", formData);
   console.log("Validation Successful");
 
   const userObj = await user.findOne({ email: Email });
+  const userToken = generateToken(userObj._id);
 
   const oneDay = 24 * 60 * 60 * 1000;
-  cookies().set("userId", userObj._id, { expires: Date.now() + oneDay });
+  cookies().set("userToken", userToken, { expires: Date.now() + oneDay });
 
-  redirect("/");
-  return {};
+  redirect("/dashboard");
+  // return {};
 };
 
 /*------- Log In user Action -------*/
@@ -154,13 +128,79 @@ export const handleLogInAction = async (
     return { ...prevState, ...errors };
   }
 
-  const userId = userExist?._id.toString();
+  const userId = userExist._id;
+  const userToken = generateToken(userId);
 
   const oneDay = 24 * 60 * 60 * 1000;
-  cookies().set("userId", userId, { expires: Date.now() + oneDay });
+  cookies().set("userToken", userToken, { expires: Date.now() + oneDay });
 
   console.log("Login Successful");
-  redirect("/");
+  redirect("/dashboard");
   // return { ...prevState, userId: userId };
   // console.log({ ...prevState, userId: userId });
+};
+
+/*------- Add User Tasks Action -------*/
+export const handleAddTaskAction = async (
+  prevState: any,
+  formData: FormData
+): Promise<AddTaskFromErrors> => {
+  const errors: Partial<AddTaskFromErrors> = {};
+
+  let rawFromData = {
+    title: formData.get("task_title"),
+    description: formData.get("task_description"),
+    status: formData.get("task_status"),
+    important: formData.get("check_important"),
+  };
+
+  let { title, description, status, important }: any = rawFromData;
+  function capitalizeFirstLetter(string: any) {
+    let words = string.trim().split(/\s+/);
+
+    for (let i = 0; i < words.length; i++) {
+      words[i] =
+        words[i].charAt(0).toUpperCase() + words[i].slice(1).toLowerCase();
+    }
+
+    return words.join(" ");
+  }
+
+  title = capitalizeFirstLetter(rawFromData.title);
+  description = capitalizeFirstLetter(rawFromData.description);
+
+  if (title.length === 0) {
+    errors.title = "* Title should not be empty";
+  } else if (title.length > 100) {
+    errors.title = "* Title should not exceed 100 characters";
+  }
+
+  if (description.length === 0) {
+    errors.description = "* Description should not be empty";
+  } else if (description.length > 500) {
+    errors.description = "* Description should not exceed 500 characters";
+  }
+
+  const tokenValue = cookies().get("userToken");
+  const { value }: any = tokenValue;
+
+  const userId = await extractTokenPayload(value);
+  console.log(userId);
+
+  if (Object.keys(errors).length > 0) {
+    return { ...prevState, ...errors };
+  }
+
+  const taskData = {
+    user_id: userId,
+    taskTitle: title,
+    taskDescription: description,
+    taskStatus: status === "Completed",
+    taskImportant: important ? true : false,
+  };
+
+  userTasks.create(taskData);
+
+  console.log(rawFromData, title, description);
+  return {};
 };

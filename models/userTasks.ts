@@ -2,8 +2,9 @@ import mongoose from "mongoose";
 
 const userTaskSchema = new mongoose.Schema(
   {
-    id: {
-      type: String,
+    user_id: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "users",
       required: true,
     },
     taskTitle: {
@@ -16,12 +17,15 @@ const userTaskSchema = new mongoose.Schema(
     },
     taskStatus: {
       type: Boolean,
-      required: true,
+      default: false,
+    },
+    taskImportant: {
+      type: Boolean,
       default: false,
     },
   },
   { timestamps: true }
 );
 
-export default mongoose.models.userTaskSchema ||
-  mongoose.model("userTask", userTaskSchema);
+export default mongoose.models["userTasks"] ||
+  mongoose.model("userTasks", userTaskSchema);

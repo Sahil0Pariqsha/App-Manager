@@ -5,11 +5,13 @@ import React, { useEffect, useState } from "react";
 
 const Completed = () => {
   const [taskList, setTaskList] = useState<any>([]);
+  const [loading, setLoading] = useState<boolean>(true);
 
   const fetchTaskList = async () => {
     const response = await axios.get("/api/taskslist/completed");
     const data = await response.data;
     setTaskList(data);
+    setLoading(false);
   };
 
   useEffect(() => {
@@ -18,7 +20,7 @@ const Completed = () => {
 
   return (
     <div className="flex-1 bg-[#212121] border-2 border-[#323232] rounded-2xl  py-4">
-      <TasksContainer title={"Completed"} taskList={taskList} />
+      <TasksContainer title={"Completed"} taskList={taskList} loading={loading} />
     </div>
   );
 };

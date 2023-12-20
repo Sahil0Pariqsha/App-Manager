@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import ForgetPassword from "./ForgetPassword";
 import { handleSignUpAction } from "@/lib/actions";
 import { useFormState } from "react-dom";
+import LoadingSpinner from "../LoadingSpinner";
 
 const Signup = ({ setLoginForm }: any) => {
   //From Action State
@@ -18,6 +19,7 @@ const Signup = ({ setLoginForm }: any) => {
     initialFromErrorsState
   );
 
+  const [loading, setLoading] = useState<boolean>(false);
   const [passwordType, setPasswordType] = useState<string>("password");
   const [confirmPasswordType, setConfirmPasswordType] =
     useState<string>("password");
@@ -51,8 +53,13 @@ const Signup = ({ setLoginForm }: any) => {
         Sign up
       </h1>
       <form
-        action={formAction}
+        action={async (fromData) => {
+          setLoading((prev) => !prev);
+          await formAction(fromData);
+          setLoading((prev) => !prev);
+        }}
         className="w-[65%] min-w-[300px] mx-auto px-4 flex flex-col gap-6"
+        id="signup-form"
       >
         <input
           type="text"
@@ -129,7 +136,7 @@ const Signup = ({ setLoginForm }: any) => {
           type="submit"
           className="font-Poppins min-h-[45px] font-bold rounded-lg w-full bg-white active:bg-gray-200 text-black drop-shadow-md"
         >
-          Sign up
+          {loading ? <LoadingSpinner /> : <p>Sign up</p>}
         </button>
       </form>
       <div className="w-fit mx-auto text-[#5F5F5F] font-Poppins mt-10">

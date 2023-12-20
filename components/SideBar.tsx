@@ -5,10 +5,12 @@ import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
+import LoadingSpinner from "./LoadingSpinner";
 
 const SideBar = () => {
   const [user, setUser] = useState<any>(null);
   const pathName = usePathname();
+  const [loadingSignOut, setLoadingSignOut] = useState<boolean>(false);
   const [selectedTab, setSelectedTab] = useState<string>(pathName);
   const router = useRouter();
 
@@ -27,12 +29,14 @@ const SideBar = () => {
   }, [router]);
 
   const handleSignOut = async () => {
+    setLoadingSignOut((prev) => !prev);
     try {
       const response = await axios.get("/api/signout");
       console.log(response.data);
-      toast.success(response.data.message);
+      setLoadingSignOut((prev) => !prev);
       router.push("/");
     } catch (error) {
+      setLoadingSignOut((prev) => !prev);
       toast.error("Failed to sign out user");
       console.log(error);
     }
@@ -45,7 +49,8 @@ const SideBar = () => {
           <Image
             src={"/images/no_user.png"}
             alt="profile"
-            fill
+            height={60}
+            width={60}
             className="object-cover"
           />
         </div>
@@ -117,11 +122,18 @@ const SideBar = () => {
         </ul>
       </main>
 
-      <button className="font-bold text-[18px]" onClick={handleSignOut}>
-        <span>
-          <i className="fa-solid fa-arrow-right-from-bracket w-[20px] mr-1"></i>
-        </span>
-        Sign Out
+      <button
+        className="font-bold text-[18px] relative h-[50px]"
+        onClick={handleSignOut}
+      >
+        {loadingSignOut ? (
+          <LoadingSpinner />
+        ) : (
+          <span>
+            <i className="fa-solid fa-arrow-right-from-bracket w-[20px] mr-1"></i>
+            Sign Out
+          </span>
+        )}
       </button>
     </div>
   );

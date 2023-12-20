@@ -4,6 +4,8 @@ import ForgetPassword from "./ForgetPassword";
 import { handleLogInAction } from "@/lib/actions";
 import { useFormState } from "react-dom";
 import { ToastContainer, toast } from "react-toastify";
+import Image from "next/image";
+import LoadingSpinner from "../LoadingSpinner";
 
 const Login = ({ setLoginForm }: any) => {
   const initialFromErrorsState: FormDataErrors = {
@@ -18,7 +20,7 @@ const Login = ({ setLoginForm }: any) => {
     handleLogInAction,
     initialFromErrorsState
   );
-
+  const [loading, setLoading] = useState<boolean>(false);
   const [passwordType, setPasswordType] = useState<string>("password");
   const [showPassword, setShowPassword] = useState<boolean>(false);
 
@@ -37,27 +39,17 @@ const Login = ({ setLoginForm }: any) => {
       </h1>
       <form
         className="w-[65%] min-w-[300px] mx-auto px-4 flex flex-col gap-6"
-        id="login-from"
+        id="login-form"
         action={async (fromData) => {
+          setLoading((prev) => !prev);
           await formAction(fromData);
           const myForm = document.getElementById(
-            "login-from"
+            "login-form"
           ) as HTMLFormElement;
           myForm.reset();
+          setLoading((prev) => !prev);
         }}
       >
-        <ToastContainer
-          position="top-right"
-          autoClose={5000}
-          hideProgressBar={false}
-          newestOnTop={false}
-          closeOnClick
-          rtl={false}
-          pauseOnFocusLoss
-          draggable
-          pauseOnHover
-          theme="dark"
-        />
         <input
           type="email"
           name="email"
@@ -97,9 +89,9 @@ const Login = ({ setLoginForm }: any) => {
         <ForgetPassword />
         <button
           type="submit"
-          className="font-Poppins min-h-[45px] font-bold rounded-lg w-full bg-white active:bg-gray-200 text-black drop-shadow-md"
+          className="font-Poppins min-h-[45px] font-bold rounded-lg w-full bg-white active:bg-gray-200 text-black drop-shadow-md relative"
         >
-          Log in
+          {loading ? <LoadingSpinner /> : <p>Log in</p>}
         </button>
       </form>
       <div className="w-fit mx-auto text-[#5F5F5F] font-Poppins mt-10">

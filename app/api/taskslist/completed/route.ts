@@ -119,6 +119,8 @@ export async function PATCH(req: Request | NextRequest) {
       );
     }
   } catch (error) {
-    console.log(error);
+    return new Response("Unauthorized", {
+      status: 401,
+    });
   }
 }

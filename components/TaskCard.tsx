@@ -52,18 +52,6 @@ const TaskCard = ({ id, title, description, status, important, date }: any) => {
   return (
     <div className="overflow-hidden rounded-2xl">
       {/* Only to hide the scrollbar overflow on dashboard */}
-      <ToastContainer
-        position="top-right"
-        autoClose={5000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-        theme="dark"
-      />
       <div className="w-full  bg-[#323232] border-[#404040] border-2 rounded-2xl px-3 py-4 flex flex-col gap-1 hover:bg-[#1a1a1a] transition-all ease-in-out duration-200 custom-scrollbar overflow-scroll">
         <div className="text-[22px] font-bold overflow-hidden text-ellipsis whitespace-nowrap border-b-2 border-[#404040]">
           {title}

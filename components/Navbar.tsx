@@ -5,11 +5,13 @@ import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
+import LoadingSpinner from "./LoadingSpinner";
 
 const Navbar = () => {
   const [user, setUser] = useState<any>(null);
   const pathName = usePathname();
   const [selectedTab, setSelectedTab] = useState<string>(pathName);
+  const [loadingSignOut, setLoadingSignOut] = useState<boolean>(false);
   const [openMenu, setOpenMenu] = useState(false);
   const router = useRouter();
 
@@ -30,14 +32,17 @@ const Navbar = () => {
 
   const handleSignOut = async () => {
     setSelectedTab("signOut");
+    setLoadingSignOut((prev) => !prev);
     try {
       const response = await axios.get("/api/signout");
       console.log(response.data);
       toast.success(response.data.message);
       router.push("/");
+      setLoadingSignOut((prev) => !prev);
     } catch (error) {
       toast.error("Failed to sign out user");
       console.log(error);
+      setLoadingSignOut((prev) => !prev);
     }
   };
 
@@ -121,17 +126,23 @@ const Navbar = () => {
             </li>
           </Link>
           <li
-            className={`min-h-[30px] pl-6 py-2 text-[#5c5c5c] cursor-pointer border-r-4 border-green-500/0 active:text-green-500 active:bg-[#323232]/100  transition-all ease-in-out duration-900 ${
+            className={`relavtive min-h-[30px] pl-6 py-2 text-[#5c5c5c] cursor-pointer border-r-4 border-green-500/0 active:text-green-500 active:bg-[#323232]/100  transition-all ease-in-out duration-900 ${
               selectedTab === "signOut"
                 ? "bg-[#323232]/100 text-white border-green-500/100"
                 : ""
             } `}
             onClick={handleSignOut}
           >
-            <span className="w-[40px] inline-block">
-              <i className="fa-solid fa-arrow-right-from-bracket w-[20px] mr-1"></i>
-            </span>
-            Sign Out
+            {loadingSignOut ? (
+              <LoadingSpinner />
+            ) : (
+              <div>
+                <span className="w-[40px] inline-block">
+                  <i className="fa-solid fa-arrow-right-from-bracket w-[20px] mr-1"></i>
+                </span>
+                <p className="inline">Sign Out</p>
+              </div>
+            )}
           </li>
         </ul>
       </div>
@@ -140,7 +151,8 @@ const Navbar = () => {
           <Image
             src={"/images/no_user.png"}
             alt="profile"
-            fill
+            height={40}
+            width={40}
             className="object-cover"
           />
         </div>

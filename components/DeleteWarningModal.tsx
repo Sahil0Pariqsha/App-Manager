@@ -55,10 +55,10 @@ const DeleteWarningModal = ({ setShowDeleteWarningModal, taskId }: any) => {
           No
         </button>
         <button
-          className="px-4 bg-yellow-500 border-b-4 active:bg-yellow-600 border-yellow-900 py-1 rounded-lg text-center cursor-pointer transition-all duration-450 ease-in-out white-space-nowrap text-black"
+          className="px-4  bg-gradient-to-r from-blue-500 via-green-500 to-indigo-400 border-b-4 active:bg-gradient-to-br border-green-900 py-1 rounded-lg text-center cursor-pointer transition-all duration-500 ease-in-out white-space-nowrap font-bold"
           onClick={makePendingCompletedTask}
         >
-          Make it Pending
+          Make it Pending !
         </button>
       </div>
     </div>

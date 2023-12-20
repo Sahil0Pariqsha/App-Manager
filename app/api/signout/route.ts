@@ -1,13 +1,6 @@
 import { cookies } from "next/headers";
 import { NextRequest, NextResponse } from "next/server";
 
-export async function getServerSideProps(context: any) {
-  return {
-    props: {},
-    notFound: true,
-  };
-}
-
 export async function GET(request: Request | NextRequest) {
   try {
     const auth = cookies().get("userToken") || "";

@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import "react-toastify/dist/ReactToastify.css";
+import { ToastContainer } from "react-toastify";
 
 export const metadata: Metadata = {
   title: "Task Manager App",
@@ -26,6 +27,18 @@ export default function RootLayout({
       <body
         className={`bg-[#181818] text-white font-Quicksand w-[100vw] h-[100vh] overflow-hidden custom-scrollbar`}
       >
+        <ToastContainer
+          position="top-right"
+          autoClose={2000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+          theme="dark"
+        />
         {children}
       </body>
     </html>

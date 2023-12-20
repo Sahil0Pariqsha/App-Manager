@@ -1,6 +1,6 @@
 import userTasks from "@/models/userTasks";
 import { extractTokenPayload } from "@/utils/functions";
-import { NextApiRequest } from "next";
+import { NextRequest } from "next/server";
 
 export const GET = async (request: any) => {
   try {
@@ -35,7 +35,7 @@ export const GET = async (request: any) => {
   }
 };
 
-export const PATCH = async (req: NextApiRequest) => {
+export const PATCH = async (req: NextRequest) => {
   try {
     const urlParams = new URL(req.url!);
     const taskId = urlParams.searchParams.get("id");

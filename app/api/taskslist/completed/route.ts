@@ -35,7 +35,7 @@ export const GET = async (request: any) => {
   }
 };
 
-export const DELETE = async (req: NextRequest) => {
+export const DELETE = async (req: Request | NextRequest) => {
   try {
     const urlParams = new URL(req.url!);
     const taskId = urlParams.searchParams.get("id");
@@ -75,7 +75,7 @@ export const DELETE = async (req: NextRequest) => {
   }
 };
 
-export const PATCH = async (req: NextRequest) => {
+export const PATCH = async (req: Request | NextRequest) => {
   console.log("Patch Req");
   try {
     const urlParams = new URL(req.url!);

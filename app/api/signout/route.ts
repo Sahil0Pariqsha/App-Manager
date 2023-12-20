@@ -19,5 +19,6 @@ export async function GET(request: Request | NextRequest) {
     });
   } catch (error) {
     console.log(error);
+    return new Response("Internal server error", { status: 500 });
   }
 }

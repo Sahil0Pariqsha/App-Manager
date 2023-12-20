@@ -1,8 +1,9 @@
 import { cookies } from "next/headers";
+import { NextRequest } from "next/server";
 
-export const GET = (request: any) => {
+export const GET = (request: Request | NextRequest) => {
   try {
-    const auth = request.cookies.get("userToken") || "";
+    const auth = cookies().get("userToken") || "";
     if (!auth) {
       return new Response("Unauthorized", {
         status: 401,

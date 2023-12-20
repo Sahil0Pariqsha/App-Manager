@@ -1,24 +1,27 @@
 import { cookies } from "next/headers";
-import { NextRequest } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
+
+export async function getServerSideProps(context: any) {
+  return {
+    props: {},
+    notFound: true,
+  };
+}
 
 export async function GET(request: Request | NextRequest) {
   try {
     const auth = cookies().get("userToken") || "";
     if (!auth) {
-      return new Response("Unauthorized", {
-        status: 401,
-      });
+      return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
     }
-    const response: any = {
-      message: "User Logged Out successfully",
-    };
 
     cookies().delete("userToken");
-    return new Response(JSON.stringify(response), {
-      status: 200,
-    });
+    return NextResponse.redirect(new URL("/", request.url));
   } catch (error) {
-    console.log(error);
-    return new Response("Internal server error", { status: 500 });
+    console.error(error);
+    return NextResponse.json(
+      { error: "Internal server error" },
+      { status: 500 }
+    );
   }
 }

@@ -1,7 +1,7 @@
 import user from "@/models/user";
 import jwt from "jsonwebtoken";
 
-export const GET = async (request: any) => {
+export async function GET(request: any) {
   try {
     const auth = request.cookies.get("userToken") || "";
     // console.log("auth token", auth);
@@ -32,4 +32,4 @@ export const GET = async (request: any) => {
       status: 401,
     });
   }
-};
+}

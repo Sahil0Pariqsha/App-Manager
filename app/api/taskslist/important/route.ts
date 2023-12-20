@@ -2,7 +2,7 @@ import userTasks from "@/models/userTasks";
 import { extractTokenPayload } from "@/utils/functions";
 import { NextRequest } from "next/server";
 
-export const GET = async (request: any) => {
+export async function GET(request: any) {
   try {
     const auth = request.cookies.get("userToken") || "";
     if (!auth) {
@@ -33,9 +33,9 @@ export const GET = async (request: any) => {
       status: 401,
     });
   }
-};
+}
 
-export const PATCH = async (req: Request | NextRequest) => {
+export async function PATCH(req: Request | NextRequest) {
   try {
     const urlParams = new URL(req.url!);
     const taskId = urlParams.searchParams.get("id");
@@ -80,4 +80,4 @@ export const PATCH = async (req: Request | NextRequest) => {
   } catch (error) {
     console.log(error);
   }
-};
+}

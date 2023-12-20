@@ -1,7 +1,7 @@
 import { cookies } from "next/headers";
 import { NextRequest } from "next/server";
 
-export const GET = (request: Request | NextRequest) => {
+export async function GET(request: Request | NextRequest) {
   try {
     const auth = cookies().get("userToken") || "";
     if (!auth) {
@@ -20,4 +20,4 @@ export const GET = (request: Request | NextRequest) => {
   } catch (error) {
     console.log(error);
   }
-};
+}

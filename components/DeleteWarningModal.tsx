@@ -1,6 +1,7 @@
+"use client";
 import axios from "axios";
 import React from "react";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 
 const DeleteWarningModal = ({ setShowDeleteWarningModal, taskId }: any) => {
   const deleteCompletedTask = async () => {

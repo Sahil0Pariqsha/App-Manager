@@ -3,9 +3,9 @@ import React, { useState } from "react";
 import ForgetPassword from "./ForgetPassword";
 import { handleLogInAction } from "@/lib/actions";
 import { useFormState } from "react-dom";
+import { ToastContainer, toast } from "react-toastify";
 
 const Login = ({ setLoginForm }: any) => {
-
   const initialFromErrorsState: FormDataErrors = {
     name: null,
     confirm_password: null,
@@ -14,7 +14,7 @@ const Login = ({ setLoginForm }: any) => {
     wrongPassword: null,
   };
 
-  const [state, fromAction] = useFormState(
+  const [state, formAction] = useFormState(
     handleLogInAction,
     initialFromErrorsState
   );
@@ -30,7 +30,6 @@ const Login = ({ setLoginForm }: any) => {
   const handleFromChange = () => {
     setLoginForm((prevState: boolean) => !prevState);
   };
-
   return (
     <div className="form flex-1">
       <h1 className="font-bold font-Poppins text-[40px] w-fit mx-auto mb-8">
@@ -38,9 +37,27 @@ const Login = ({ setLoginForm }: any) => {
       </h1>
       <form
         className="w-[65%] min-w-[300px] mx-auto px-4 flex flex-col gap-6"
-        action={fromAction}
+        id="login-from"
+        action={async (fromData) => {
+          await formAction(fromData);
+          const myForm = document.getElementById(
+            "login-from"
+          ) as HTMLFormElement;
+          myForm.reset();
+        }}
       >
-        {" "}
+        <ToastContainer
+          position="top-right"
+          autoClose={5000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+          theme="dark"
+        />
         <input
           type="email"
           name="email"
@@ -84,11 +101,6 @@ const Login = ({ setLoginForm }: any) => {
         >
           Log in
         </button>
-        {/* <div className="-mt-4 flex justify-between text-[16px]">
-          <p className="text-green-400">
-            {state.userId && "User Login Successful"}
-          </p>
-        </div> */}
       </form>
       <div className="w-fit mx-auto text-[#5F5F5F] font-Poppins mt-10">
         Don&apos;t have an account ?

@@ -12,7 +12,6 @@ import {
   hashPassword,
 } from "@/utils/functions";
 import userTasks from "@/models/userTasks";
-
 dbConnect();
 
 /*------- Sign Up user Action -------*/
@@ -128,7 +127,7 @@ export const handleLogInAction = async (
     return { ...prevState, ...errors };
   }
 
-  const userId = userExist._id;
+  const userId = userExist?._id;
   const userToken = generateToken(userId);
 
   const oneDay = 24 * 60 * 60 * 1000;
@@ -136,8 +135,6 @@ export const handleLogInAction = async (
 
   console.log("Login Successful");
   redirect("/dashboard");
-  // return { ...prevState, userId: userId };
-  // console.log({ ...prevState, userId: userId });
 };
 
 /*------- Add User Tasks Action -------*/

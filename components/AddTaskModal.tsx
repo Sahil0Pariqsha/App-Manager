@@ -1,6 +1,7 @@
 "use client";
 import { handleAddTaskAction } from "@/lib/actions";
-import React, { useState } from "react";
+import { useRouter } from "next/navigation";
+import React, { useEffect, useState } from "react";
 import { useFormState } from "react-dom";
 
 const AddTaskModal = ({
@@ -9,6 +10,8 @@ const AddTaskModal = ({
   setShowTaskModal: (e: any) => void;
 }) => {
   const [selectedOption, setSelectedOption] = useState("");
+  const router = useRouter();
+
   const initialStateErrors: AddTaskFromErrors = {
     title: null,
     description: null,
@@ -18,7 +21,6 @@ const AddTaskModal = ({
     initialStateErrors
   );
 
-  console.log(selectedOption);
   const handleOptionChange = (event: any) => {
     const value = event.target.value;
     console.log(value);

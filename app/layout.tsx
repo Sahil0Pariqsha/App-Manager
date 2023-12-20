@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import "react-toastify/dist/ReactToastify.css";
 
 export const metadata: Metadata = {
   title: "Task Manager App",
@@ -23,7 +24,7 @@ export default function RootLayout({
         />
       </head>
       <body
-        className={`bg-[#181818] text-white font-Quicksand w-[100vw] h-[100vh]`}
+        className={`bg-[#181818] text-white font-Quicksand w-[100vw] h-[100vh] overflow-hidden custom-scrollbar`}
       >
         {children}
       </body>

@@ -5,10 +5,11 @@ import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
-const SideBar = () => {
+const Navbar = () => {
   const [user, setUser] = useState<any>(null);
   const pathName = usePathname();
   const [selectedTab, setSelectedTab] = useState<string>(pathName);
+  const [openMenu, setOpenMenu] = useState(false);
   const router = useRouter();
 
   useEffect(() => {
@@ -16,6 +17,7 @@ const SideBar = () => {
       try {
         const response = await axios.get(`/api/profile`);
         const data = response.data;
+        // console.log("data from fetch user", data);
         setUser(data);
       } catch (err) {
         console.log(err);
@@ -26,6 +28,7 @@ const SideBar = () => {
   }, [router]);
 
   const handleSignOut = async () => {
+    setSelectedTab("signOut");
     try {
       await axios.get("/api/signout");
       router.push("/");
@@ -34,21 +37,24 @@ const SideBar = () => {
     }
   };
 
-  return (
-    <div className="w-full h-full flex flex-col justify-between items-center min-w-[190px]">
-      <div className="flex items-center gap-2 px-8">
-        <div className="h-[50px] w-[50px] shrink-0 relative rounded-[50%] overflow-hidden">
-          <Image
-            src={"/images/no_user.png"}
-            alt="profile"
-            fill
-            className="object-cover"
-          />
-        </div>
-        <h1 className="font-bold text-[20px]">{user?.name}</h1>
-      </div>
+  let currentDate = new Date().toJSON().slice(0, 10);
 
-      <main className="w-full">
+  return (
+    <div className="w-full h-full flex justify-between items-center min-w-[190px] px-6 py-2 relative">
+      <div>
+        <button onClick={() => setOpenMenu(!openMenu)}>
+          <i
+            className={`fa-solid ${
+              openMenu ? "fa-xmark" : "fa-bars"
+            } text-[24px]`}
+          ></i>
+        </button>
+      </div>
+      <div
+        className={`w-full ${
+          openMenu ? "block" : "hidden"
+        } bg-[#212121] border-2 border-[#a0a0a0] rounded-2xl drop-shadow-2xl absolute top-0 left-0 translate-y-[30%] z-10 overflow-hidden`}
+      >
         <ul className="flex flex-col text-[18px] gap-2 font-bold w-full text-left whitespace-nowrap">
           <Link href={"/dashboard"}>
             <li
@@ -110,17 +116,39 @@ const SideBar = () => {
               Do it Now
             </li>
           </Link>
+          <li
+            className={`min-h-[30px] pl-6 py-2 text-[#5c5c5c] cursor-pointer border-r-4 border-green-500/0 active:text-green-500 active:bg-[#323232]/100  transition-all ease-in-out duration-900 ${
+              selectedTab === "signOut"
+                ? "bg-[#323232]/100 text-white border-green-500/100"
+                : ""
+            } `}
+            onClick={handleSignOut}
+          >
+            <span className="w-[40px] inline-block">
+              <i className="fa-solid fa-arrow-right-from-bracket w-[20px] mr-1"></i>
+            </span>
+            Sign Out
+          </li>
         </ul>
-      </main>
-
-      <button className="font-bold text-[18px]" onClick={handleSignOut}>
-        <span>
-          <i className="fa-solid fa-arrow-right-from-bracket w-[20px] mr-1"></i>
-        </span>
-        Sign Out
-      </button>
+      </div>
+      <div className="flex flex-row-reverse items-center gap-2">
+        <div className="h-[40px] w-[40px] shrink-0 relative rounded-[10%] overflow-hidden">
+          <Image
+            src={"/images/no_user.png"}
+            alt="profile"
+            fill
+            className="object-cover"
+          />
+        </div>
+        <div>
+          <h1 className="font-bold text-[20px]">{user?.name}</h1>
+          <p className="text-[12px] text-right -mt-1 text-gray-400">
+            {currentDate}
+          </p>
+        </div>
+      </div>
     </div>
   );
 };
 
-export default SideBar;
+export default Navbar;

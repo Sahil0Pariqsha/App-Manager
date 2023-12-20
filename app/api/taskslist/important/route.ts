@@ -1,5 +1,6 @@
 import userTasks from "@/models/userTasks";
 import { extractTokenPayload } from "@/utils/functions";
+import { NextApiRequest } from "next";
 
 export const GET = async (request: any) => {
   try {
@@ -31,5 +32,52 @@ export const GET = async (request: any) => {
     return new Response("Unauthorized", {
       status: 401,
     });
+  }
+};
+
+export const PATCH = async (req: NextApiRequest) => {
+  try {
+    const urlParams = new URL(req.url!);
+    const taskId = urlParams.searchParams.get("id");
+
+    if (!taskId) {
+      return new Response(JSON.stringify({ message: "Task ID is required" }), {
+        status: 400,
+      });
+    }
+
+    const task = await userTasks.findOne({ _id: taskId });
+    if (!task) {
+      return new Response(JSON.stringify({ message: "Task not found" }), {
+        status: 404,
+      });
+    }
+
+    const updateTask = await userTasks.updateOne(
+      {
+        _id: taskId, // it is immutable
+      },
+      {
+        $set: { taskImportant: false }, // Updates only the taskImportant field
+      }
+    );
+
+    console.log(updateTask, taskId, urlParams);
+
+    if (updateTask) {
+      return new Response(
+        JSON.stringify({ message: "Task Updated successfully" }),
+        {
+          status: 200,
+        }
+      );
+    } else {
+      return new Response(
+        JSON.stringify({ message: "Unexpected error. Please try again." }),
+        { status: 500 }
+      );
+    }
+  } catch (error) {
+    console.log(error);
   }
 };

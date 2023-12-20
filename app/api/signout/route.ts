@@ -10,7 +10,7 @@ export const GET = (request: Request | NextRequest) => {
       });
     }
     const response: any = {
-      message: "User logged out successfully",
+      message: "User Logged Out successfully",
     };
 
     cookies().delete("userToken");

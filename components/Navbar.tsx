@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import { toast } from "react-toastify";
 
 const Navbar = () => {
   const [user, setUser] = useState<any>(null);
@@ -30,9 +31,12 @@ const Navbar = () => {
   const handleSignOut = async () => {
     setSelectedTab("signOut");
     try {
-      await axios.get("/api/signout");
+      const response = await axios.get("/api/signout");
+      console.log(response.data);
+      toast.success(response.data.message);
       router.push("/");
     } catch (error) {
+      toast.error("Failed to sign out user");
       console.log(error);
     }
   };

@@ -11,7 +11,7 @@ export async function GET(request: any) {
       });
     }
 
-    const { id } = (await jwt.verify(
+    const { id } = ( jwt.verify(
       auth.value,
       process.env.JWT_SECRET!
     )) as any;

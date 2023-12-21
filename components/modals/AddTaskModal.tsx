@@ -3,7 +3,7 @@ import { handleAddTaskAction } from "@/lib/actions";
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 import { useFormState } from "react-dom";
-import LoadingSpinner from "./LoadingSpinner";
+import LoadingSpinner from "../LoadingSpinner";
 
 const AddTaskModal = ({
   setShowTaskModal,

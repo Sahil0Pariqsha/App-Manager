@@ -45,4 +45,10 @@ export const BigLoadingSpinner = () => {
     </div>
   );
 };
+
+export const LoadingSkeleton = () => {
+  return (
+    <div className="flex flex-1 w-full h-full bg-[#323232]  animate-pulse overflow-hidden rounded-lg"></div>
+  );
+};
 export default LoadingSpinner;

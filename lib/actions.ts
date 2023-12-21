@@ -201,3 +201,70 @@ export const handleAddTaskAction = async (
   console.log(rawFromData, title, description);
   return {};
 };
+
+/*------- Update User Tasks Action -------*/
+export const handleUpdateTaskAction = async (
+  prevState: any,
+  formData: FormData
+): Promise<AddTaskFromErrors> => {
+  const errors: Partial<AddTaskFromErrors> = {};
+
+  let rawFromData = {
+    taskId: formData.get("taskId"),
+    title: formData.get("task_title"),
+    description: formData.get("task_description"),
+    status: formData.get("task_status"),
+    important: formData.get("check_important"),
+  };
+
+  let { taskId, title, description, status, important }: any = rawFromData;
+  function capitalizeFirstLetter(string: any) {
+    let words = string.trim().split(/\s+/);
+
+    for (let i = 0; i < words.length; i++) {
+      words[i] =
+        words[i].charAt(0).toUpperCase() + words[i].slice(1).toLowerCase();
+    }
+
+    return words.join(" ");
+  }
+
+  title = capitalizeFirstLetter(rawFromData.title);
+  description = capitalizeFirstLetter(rawFromData.description);
+
+  if (title.length === 0) {
+    errors.title = "* Title should not be empty";
+  } else if (title.length > 100) {
+    errors.title = "* Title should not exceed 100 characters";
+  }
+
+  if (description.length === 0) {
+    errors.description = "* Description should not be empty";
+  } else if (description.length > 500) {
+    errors.description = "* Description should not exceed 500 characters";
+  }
+
+  if (Object.keys(errors).length > 0) {
+    return { ...prevState, ...errors };
+  }
+
+  const taskData = {
+    taskTitle: title,
+    taskDescription: description,
+    taskStatus: status === "Completed",
+    taskImportant: important ? true : false,
+  };
+
+  try {
+    const taskObj = await userTasks.findOneAndUpdate(
+      { _id: taskId },
+      { $set: taskData },
+      { new: true }
+    );
+    console.log("Updated task:", taskObj);
+  } catch (error) {
+    console.error("Error updating task:", error);
+  }
+  console.log(rawFromData, title, description);
+  return {};
+};

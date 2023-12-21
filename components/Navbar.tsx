@@ -5,13 +5,14 @@ import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
-import LoadingSpinner from "./LoadingSpinner";
+import LoadingSpinner, { LoadingSkeleton } from "./LoadingSpinner";
 
 const Navbar = () => {
   const [user, setUser] = useState<any>(null);
   const pathName = usePathname();
   const [selectedTab, setSelectedTab] = useState<string>(pathName);
   const [loadingSignOut, setLoadingSignOut] = useState<boolean>(false);
+  const [loadingName, setLoadingName] = useState<boolean>(true);
   const [openMenu, setOpenMenu] = useState(false);
   const router = useRouter();
 
@@ -22,6 +23,7 @@ const Navbar = () => {
         const data = response.data;
         // console.log("data from fetch user", data);
         setUser(data);
+        setLoadingName(false);
       } catch (err) {
         console.log(err);
         router.push("/");
@@ -157,7 +159,13 @@ const Navbar = () => {
           />
         </div>
         <div>
-          <h1 className="font-bold text-[20px]">{user?.name}</h1>
+          {loadingName ? (
+            <div className="w-[90px] h-[20px] mb-2">
+              <LoadingSkeleton />
+            </div>
+          ) : (
+            <h1 className="font-bold text-[20px]">{user?.name}</h1>
+          )}
           <p className="text-[12px] text-right -mt-1 text-gray-400">
             {currentDate}
           </p>

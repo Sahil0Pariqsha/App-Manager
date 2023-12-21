@@ -5,13 +5,17 @@ import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
-import LoadingSpinner from "./LoadingSpinner";
+import LoadingSpinner, { LoadingSkeleton } from "./LoadingSpinner";
+import UpdateUserProfileModal from "./modals/UpdateUserProfileModal";
 
 const SideBar = () => {
   const [user, setUser] = useState<any>(null);
   const pathName = usePathname();
   const [loadingSignOut, setLoadingSignOut] = useState<boolean>(false);
+  const [loadingName, setLoadingName] = useState<boolean>(true);
   const [selectedTab, setSelectedTab] = useState<string>(pathName);
+  const [showUpdateUserProfileModal, setShowUpdateUserProfileModal] =
+    useState<boolean>(false);
   const router = useRouter();
 
   useEffect(() => {
@@ -20,9 +24,11 @@ const SideBar = () => {
         const response = await axios.get(`/api/profile`);
         const data = response.data;
         setUser(data);
+        setLoadingName(false);
       } catch (err) {
         console.log(err);
         router.push("/");
+        setLoadingName(false);
       }
     };
     fetchUserData();
@@ -44,17 +50,24 @@ const SideBar = () => {
 
   return (
     <div className="w-full h-full flex flex-col justify-between items-center min-w-[190px]">
-      <div className="flex items-center gap-2 px-8">
+      <div className="flex items-center gap-2 px-8 mx-2 py-2 -mt-2 rounded-lg cursor-arrow hover:bg-[#171717] border-transparent hover:border-[#323232] border-2 transition-all ease-in-out duration-300">
         <div className="h-[50px] w-[50px] shrink-0 relative rounded-[50%] overflow-hidden">
           <Image
             src={"/images/no_user.png"}
             alt="profile"
             height={60}
             width={60}
-            className="object-cover"
+            className="object-cover cursor-pointer"
+            onClick={() => setShowUpdateUserProfileModal((prev) => !prev)}
           />
         </div>
-        <h1 className="font-bold text-[20px]">{user?.name}</h1>
+        {loadingName ? (
+          <div className="w-[90px] h-[40px]">
+            <LoadingSkeleton />
+          </div>
+        ) : (
+          <h1 className="font-bold text-[20px] cursor-default">{user?.name}</h1>
+        )}
       </div>
 
       <main className="w-full">
@@ -135,6 +148,12 @@ const SideBar = () => {
           </span>
         )}
       </button>
+      {showUpdateUserProfileModal && (
+        <UpdateUserProfileModal
+          Name={user.name}
+          setShowUpdateUserProfileModal={setShowUpdateUserProfileModal}
+        />
+      )}
     </div>
   );
 };

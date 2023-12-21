@@ -11,3 +11,8 @@ type AddTaskFromErrors = {
   title?: string | null;
   description?: string | null;
 }
+
+type UpdateTaskFromErrors = {
+  title?: string | null;
+  description?: string | null;
+};

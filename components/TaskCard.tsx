@@ -1,12 +1,16 @@
-"use client"
+"use client";
 import axios from "axios";
 import { usePathname } from "next/navigation";
 import React, { useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
-import DeleteWarningModal from "./DeleteWarningModal";
+import DeleteWarningModal from "./modals/DeleteWarningModal";
+import TaskUpdateModal from "./modals/TaskUpdateModal";
 
 const TaskCard = ({ id, title, description, status, important, date }: any) => {
-  const [showDeleteWarningModal, setShowDeleteWarningModal] = useState(false);
+  const [showDeleteWarningModal, setShowDeleteWarningModal] =
+    useState<boolean>(false);
+  const [showTaskUpdateModal, setShowTaskUpdateModal] =
+    useState<boolean>(false);
   const pathName = usePathname();
 
   const dateObj = new Date(date);
@@ -74,7 +78,10 @@ const TaskCard = ({ id, title, description, status, important, date }: any) => {
             {status ? "Completed" : "Pending"}
           </div>
           <div className="flex gap-3 text-[#babaca] font-bold bg-black/50 hover:bg-black/80 w-fit px-3 py-1 rounded-full cursor-pointer  transition-all ease-in-out duration-200">
-            <button className="hover:text-yellow-500 active:text-yellow-800 transition-all ease-in-out duration-200">
+            <button
+              className="hover:text-yellow-500 active:text-yellow-800 transition-all ease-in-out duration-200"
+              onClick={() => setShowTaskUpdateModal((prev) => !prev)}
+            >
               <i className="fa-solid fa-note-sticky"></i>
             </button>
             <button
@@ -90,6 +97,16 @@ const TaskCard = ({ id, title, description, status, important, date }: any) => {
           </div>
         </div>
       </div>
+      {showTaskUpdateModal && (
+        <TaskUpdateModal
+          setShowTaskUpdateModal={setShowTaskUpdateModal}
+          title={title}
+          description={description}
+          status={status}
+          important={important}
+          taskId={id}
+        />
+      )}
       {showDeleteWarningModal && (
         <DeleteWarningModal
           setShowDeleteWarningModal={setShowDeleteWarningModal}

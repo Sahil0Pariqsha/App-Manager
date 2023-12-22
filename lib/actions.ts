@@ -62,6 +62,7 @@ export const handleSignUpAction = async (
       .replace(/(?:^|\s)\S/g, (char: any) => char.toUpperCase()),
     email: Email?.toString().toLowerCase(),
     password: hashedPassword,
+    image: "",
   };
 
   await user.create(userData);
@@ -266,5 +267,84 @@ export const handleUpdateTaskAction = async (
     console.error("Error updating task:", error);
   }
   console.log(rawFromData, title, description);
+  return {};
+};
+
+export const handleUpdateUserProfileAction = async (
+  prevState: any,
+  formData: FormData
+): Promise<UpdateUserProfileErrors> => {
+  const errors: Partial<UpdateUserProfileErrors> = {};
+
+  const rawFromData = {
+    name: formData.get("user_name"),
+    image: formData.get("user_image"),
+    base64: formData.get("user_base64"),
+  };
+
+  const { name, image }: any = rawFromData;
+
+  const MAX_IMAGE_SIZE = 5 * 1024 * 1024;
+  if (image.size > MAX_IMAGE_SIZE) {
+    errors.imageError = "* Image size should not exceed 2MB";
+  }
+
+  if (name.length === 0 || name.length > 100) {
+    errors.nameError =
+      "* Name should not be empty and should not exceed 100 characters";
+  }
+
+  if (!fullNameIsValid(name)) {
+    errors.nameError =
+      "* Name should not be empty or contain special characters only";
+  }
+
+  if (Object.keys(errors).length > 0) {
+    return { ...prevState, ...errors };
+  }
+
+  try {
+    const data = new FormData();
+    data.append("file", image);
+    data.append("upload_preset", "task-manager-app");
+
+    const response = await fetch(
+      "https://api.cloudinary.com/v1_1/davcwgys3/image/upload",
+      {
+        method: "post",
+        body: data,
+      }
+    );
+
+    const responseData = await response.json();
+    const imageUrl = responseData.url;
+    console.log("Cloudinary Image URL inside:", imageUrl);
+
+    const userData = {
+      name: name
+        ?.toString()
+        .toLowerCase()
+        .replace(/(?:^|\s)\S/g, (char: any) => char.toUpperCase()),
+      image: imageUrl,
+    };
+
+    console.log("UserData:", userData);
+
+    const tokenValue = cookies().get("userToken");
+    const { value }: any = tokenValue;
+
+    const userId = await extractTokenPayload(value);
+    console.log(userId);
+
+    const userObj = await user.findOneAndUpdate(
+      { _id: userId },
+      { $set: userData },
+      { new: true }
+    );
+    console.log(userObj);
+  } catch (error) {
+    console.error("Error:", error);
+  }
+
   return {};
 };

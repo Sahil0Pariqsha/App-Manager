@@ -36,7 +36,7 @@ const DeleteWarningModal = ({ setShowDeleteWarningModal, taskId }: any) => {
         Are you sure you want to delete this?
       </p>
       <button
-        className="flex items-center justify-center h-[40px] w-[40px] rounded-full border-2 border-[#323232] text-[#5c5c5c] hover:text-[#b3b3b3] hover:border-[#9a9a9a] absolute top-2 right-2 text-[24px] font-bold"
+        className="flex items-center justify-center h-[30px] w-[30px] rounded-full border-2 border-[#323232] text-[#5c5c5c] hover:text-[#b3b3b3] hover:border-[#9a9a9a] absolute top-2 right-2 text-[20px] font-bold"
         onClick={() => setShowDeleteWarningModal((prev: any) => !prev)}
       >
         <i className="fa-solid fa-xmark"></i>

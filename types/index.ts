@@ -16,3 +16,8 @@ type UpdateTaskFromErrors = {
   title?: string | null;
   description?: string | null;
 };
+
+type UpdateUserProfileErrors = {
+  nameError?: string | null;
+  imageError?: string | null;
+}

@@ -98,20 +98,32 @@ const TaskCard = ({ id, title, description, status, important, date }: any) => {
         </div>
       </div>
       {showTaskUpdateModal && (
-        <TaskUpdateModal
-          setShowTaskUpdateModal={setShowTaskUpdateModal}
-          title={title}
-          description={description}
-          status={status}
-          important={important}
-          taskId={id}
-        />
+        <>
+          <div
+            className="modal-wrapper absolute z-2 backdrop-blur-sm blur-sm bg-[#000000a7] top-0 left-0 bottom-0 right-0 rounded-2xl overflow-hidden"
+            onClick={() => setShowTaskUpdateModal(false)}
+          ></div>
+          <TaskUpdateModal
+            setShowTaskUpdateModal={setShowTaskUpdateModal}
+            title={title}
+            description={description}
+            status={status}
+            important={important}
+            taskId={id}
+          />
+        </>
       )}
       {showDeleteWarningModal && (
-        <DeleteWarningModal
-          setShowDeleteWarningModal={setShowDeleteWarningModal}
-          taskId={id}
-        />
+        <>
+          <div
+            className="modal-wrapper absolute z-2 backdrop-blur-sm blur-sm bg-[#000000a7] top-0 left-0 bottom-0 right-0 rounded-2xl overflow-hidden"
+            onClick={() => setShowDeleteWarningModal(false)}
+          ></div>
+          <DeleteWarningModal
+            setShowDeleteWarningModal={setShowDeleteWarningModal}
+            taskId={id}
+          />
+        </>
       )}
     </div>
   );

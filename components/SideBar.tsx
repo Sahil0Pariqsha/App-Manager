@@ -51,22 +51,28 @@ const SideBar = () => {
   return (
     <div className="w-full h-full flex flex-col justify-between items-center min-w-[190px]">
       <div className="flex items-center gap-2 px-8 mx-2 py-2 -mt-2 rounded-lg cursor-arrow hover:bg-[#171717] border-transparent hover:border-[#323232] border-2 transition-all ease-in-out duration-300">
-        <div className="h-[50px] w-[50px] shrink-0 relative rounded-[50%] overflow-hidden">
-          <Image
-            src={"/images/no_user.png"}
-            alt="profile"
-            height={60}
-            width={60}
-            className="object-cover cursor-pointer"
-            onClick={() => setShowUpdateUserProfileModal((prev) => !prev)}
-          />
+        <div className="h-[50px] w-[50px] shrink-0 relative rounded-full overflow-hidden border-2 border-[#2b2b2b0f]">
+          {loadingName ? (
+            <LoadingSkeleton />
+          ) : (
+            <Image
+              src={user?.image === "" ? "/images/no_user.png" : user?.image}
+              alt="profile"
+              height={100}
+              width={100}
+              className="object-cover w-full h-full cursor-pointer"
+              onClick={() => setShowUpdateUserProfileModal((prev) => !prev)}
+            />
+          )}
         </div>
         {loadingName ? (
           <div className="w-[90px] h-[40px]">
             <LoadingSkeleton />
           </div>
         ) : (
-          <h1 className="font-bold text-[20px] cursor-default">{user?.name}</h1>
+          <h1 className="font-bold text-[20px] cursor-default text-center min-w-[60px] max-w-[100px] whitespace-nowrap text-ellipsis overflow-hidden">
+            {user?.name}
+          </h1>
         )}
       </div>
 
@@ -150,7 +156,8 @@ const SideBar = () => {
       </button>
       {showUpdateUserProfileModal && (
         <UpdateUserProfileModal
-          Name={user.name}
+          Name={user?.name}
+          UserImage={user?.image}
           setShowUpdateUserProfileModal={setShowUpdateUserProfileModal}
         />
       )}

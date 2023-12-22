@@ -20,8 +20,12 @@ export default function Dashboard() {
   }, []);
 
   return (
-    <div className="flex-1 bg-[#212121] border-2 border-[#323232] rounded-2xl  py-4">
-      <TasksContainer title={"All Tasks"} taskList={taskList} loading={loading} />
+    <div className="flex-1 bg-[#212121] border-2 border-[#323232] rounded-2xl">
+      <TasksContainer
+        title={"All Tasks"}
+        taskList={taskList}
+        loading={loading}
+      />
     </div>
   );
 }

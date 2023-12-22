@@ -11,7 +11,7 @@ const TasksContainer = ({ title, taskList, loading }: any) => {
 
   return (
     <div className="flex flex-col px-8 relative gap-6 h-full">
-      <div className="flex justify-between">
+      <div className="flex justify-between py-4">
         <div className="flex flex-col justify-between text-[26px] font-bold">
           <h1 className="whitespace-nowrap">{title}</h1>
           <div className="w-[50%] h-[4px] bg-green-400 rounded-[16px] mb-2"></div>
@@ -25,13 +25,19 @@ const TasksContainer = ({ title, taskList, loading }: any) => {
           </button>
         </div>
         {showTaskModal && (
-          <div className="absolute top-[50%] left-[50%] -translate-x-2/4 -translate-y-2/4 z-10">
-            <AddTaskModal setShowTaskModal={setShowTaskModal} />
-          </div>
+          <>
+            <div
+              className="modal-wrapper absolute z-2 backdrop-blur-sm blur-sm bg-[#000000a7] top-0 left-0 bottom-0 right-0 rounded-2xl overflow-hidden"
+              onClick={() => setShowTaskModal(false)}
+            ></div>
+            <div className="absolute top-[50%] left-[50%] -translate-x-2/4 -translate-y-2/4 z-10">
+              <AddTaskModal setShowTaskModal={setShowTaskModal} />
+            </div>
+          </>
         )}
       </div>
 
-      <div className="h-full overflow-y-scroll custom-scrollbar">
+      <div className="h-full overflow-y-scroll custom-scrollbar pb-4">
         {loading ? (
           <BigLoadingSpinner />
         ) : (

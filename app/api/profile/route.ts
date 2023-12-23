@@ -1,22 +1,18 @@
 import user from "@/models/user";
 import jwt from "jsonwebtoken";
-import { NextApiRequest } from "next";
 import { cookies } from "next/headers";
+import { NextRequest } from "next/server";
 
-export async function GET(request: NextApiRequest) {
+export async function GET(request: Request | NextRequest) {
   try {
     const auth = cookies().get("userToken") || "";
-    // console.log("auth token", auth);
     if (!auth) {
       return new Response("Unauthorized", {
         status: 401,
       });
     }
 
-    const { id } = ( jwt.verify(
-      auth.value,
-      process.env.JWT_SECRET!
-    )) as any;
+    const { id } = jwt.verify(auth.value, process.env.JWT_SECRET!) as any;
 
     const userExist = await user.findOne({ _id: id });
 

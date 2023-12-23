@@ -1,10 +1,11 @@
 import userTasks from "@/models/userTasks";
 import { extractTokenPayload } from "@/utils/functions";
+import { cookies } from "next/headers";
 import { NextRequest } from "next/server";
 
-export async function GET(request: any) {
+export async function GET(request: Request | NextRequest) {
   try {
-    const auth = request.cookies.get("userToken") || "";
+    const auth = cookies().get("userToken") || ("" as any);
     if (!auth) {
       return new Response("Unauthorized", {
         status: 401,

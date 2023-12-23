@@ -124,3 +124,5 @@ export async function PATCH(req: Request | NextRequest) {
     });
   }
 }
+
+export const dynamic = "force-dynamic";

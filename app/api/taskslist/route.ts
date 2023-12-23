@@ -70,3 +70,5 @@ export async function DELETE(req: Request | NextRequest) {
     console.log(error);
   }
 }
+
+export const dynamic = "force-dynamic";

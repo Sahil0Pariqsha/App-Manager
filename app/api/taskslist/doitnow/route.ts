@@ -81,3 +81,5 @@ export async function PATCH(req: Request | NextRequest) {
     console.log(error);
   }
 }
+
+export const dynamic = "force-dynamic";

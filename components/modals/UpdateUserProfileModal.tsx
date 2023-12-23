@@ -4,14 +4,17 @@ import Image from "next/image";
 import React, { useState } from "react";
 import { useFormState } from "react-dom";
 import UserImageModal from "./UserImageModal";
+import LoadingSpinner from "../LoadingSpinner";
 
 const UpdateUserProfileModal = ({
   Name,
   UserImage,
   setShowUpdateUserProfileModal,
+  md,
 }: any) => {
   const [userName, setUserName] = useState<string>(Name);
   const [showUserImage, setShowUserImage] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(false);
   const [image, setImage] = useState<any>("");
 
   const initialState = {
@@ -19,15 +22,16 @@ const UpdateUserProfileModal = ({
     imageError: null,
   };
 
-  const [state, fromAction] = useFormState(
+  const [state, formAction] = useFormState(
     handleUpdateUserProfileAction,
     initialState
   );
 
+  console.log(loading);
   return (
     <>
       <div
-        className="modal-wrapper absolute z-10 backdrop-blur-sm blur-sm bg-[#000000a7] top-0 left-0 bottom-0 right-0 rounded-2xl overflow-hidden"
+        className="modal-wrapper absolute z-10 backdrop-blur-sm blur-sm bg-[#000000a7] top-0 left-0 bottom-0 right-0 rounded-2xl overflow-hidden h-full w-full"
         onClick={() => setShowUpdateUserProfileModal(false)}
       ></div>
       {showUserImage && (
@@ -36,10 +40,23 @@ const UpdateUserProfileModal = ({
           UserImage={UserImage}
         />
       )}
-      <div className="bg-[#181818] rounded-xl border-2 border-[#323232] fixed top-2/4 left-2/4 -translate-x-1/4 -translate-y-2/4 z-10">
+      <div
+        className={`bg-[#181818] rounded-xl border-2 border-[#323232] absolute top-2/4 left-2/4 -translate-x-2/4 ${
+          md ? " translate-y-[20%] " : " -translate-y-2/4 "
+        } z-10`}
+      >
         <form
           className="p-6 min-w-[300px] mx-auto flex flex-col gap-6"
-          action={fromAction}
+          id="update-user-form"
+          action={async (formData) => {
+            setLoading((prev) => !prev);
+            await formAction(formData); //* loading state not working if i remove await from here
+            const myForm = document.getElementById(
+              "update-user-form"
+            ) as HTMLFormElement;
+            myForm.reset();
+            setLoading((prev) => !prev);
+          }}
         >
           <div className="flex gap-4">
             <div
@@ -95,7 +112,7 @@ const UpdateUserProfileModal = ({
             type="submit"
             className="font-Poppins min-h-[45px] font-bold rounded-lg w-full bg-white active:bg-gray-200 text-black drop-shadow-md hover:bg-white/70 transition-all duration-200 hover:text-white/70"
           >
-            {<p>Update Profile</p>}
+            {loading ? <LoadingSpinner /> : <p>Update Profile</p>}
           </button>
         </form>
       </div>

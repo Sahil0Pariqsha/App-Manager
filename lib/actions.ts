@@ -12,13 +12,13 @@ import {
   hashPassword,
 } from "@/utils/functions";
 import userTasks from "@/models/userTasks";
-dbConnect();
 
 /*------- Sign Up user Action -------*/
 export const handleSignUpAction = async (
   prevState: any,
   formData: FormData
 ): Promise<FormDataErrors> => {
+  await dbConnect();
   const rawFromData = {
     Name: formData.get("name"),
     Email: formData.get("email"),
@@ -85,6 +85,7 @@ export const handleLogInAction = async (
   prevState: any,
   formData: FormData
 ): Promise<FormDataErrors> => {
+  await dbConnect();
   const errors: Partial<FormDataErrors> = {};
 
   const rawFromData = {

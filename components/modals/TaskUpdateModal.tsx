@@ -13,7 +13,7 @@ const TaskUpdateModal = ({
   important,
   taskId,
 }: any) => {
-  const [selectedOption, setSelectedOption] = useState("Pending");
+  const [selectedOption, setSelectedOption] = useState("");
   const [loading, setLoading] = useState<boolean>(false);
   const router = useRouter();
 
@@ -61,13 +61,13 @@ const TaskUpdateModal = ({
           </button>
         </div>
         <form
-          id="add-task-from"
+          id="add-task-form"
           className="p-6 w-[65%] min-w-[300px] mx-auto flex flex-col gap-6"
-          action={async (fromData) => {
+          action={async (formData) => {
             setLoading((prev) => !prev);
-            await formAction(fromData);
+            await formAction(formData);
             const myForm = document.getElementById(
-              "add-task-from"
+              "add-task-form"
             ) as HTMLFormElement;
             myForm.reset();
             setLoading((prev) => !prev);

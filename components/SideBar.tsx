@@ -21,7 +21,7 @@ const SideBar = () => {
   useEffect(() => {
     const fetchUserData = async () => {
       try {
-        const response = await axios.get(`/api/profile`);
+        const response = await axios.get("/api/profile");
         const data = response.data;
         setUser(data);
         setLoadingName(false);
@@ -159,6 +159,7 @@ const SideBar = () => {
           Name={user?.name}
           UserImage={user?.image}
           setShowUpdateUserProfileModal={setShowUpdateUserProfileModal}
+          md={false}
         />
       )}
     </div>

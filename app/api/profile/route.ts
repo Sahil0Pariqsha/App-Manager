@@ -1,9 +1,11 @@
 import user from "@/models/user";
 import jwt from "jsonwebtoken";
+import { NextApiRequest } from "next";
+import { cookies } from "next/headers";
 
-export async function GET(request: any) {
+export async function GET(request: NextApiRequest) {
   try {
-    const auth = request.cookies.get("userToken") || "";
+    const auth = cookies().get("userToken") || "";
     // console.log("auth token", auth);
     if (!auth) {
       return new Response("Unauthorized", {

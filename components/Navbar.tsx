@@ -6,6 +6,7 @@ import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import LoadingSpinner, { LoadingSkeleton } from "./LoadingSpinner";
+import UpdateUserProfileModal from "./modals/UpdateUserProfileModal";
 
 const Navbar = () => {
   const [user, setUser] = useState<any>(null);
@@ -14,6 +15,8 @@ const Navbar = () => {
   const [loadingSignOut, setLoadingSignOut] = useState<boolean>(false);
   const [loadingName, setLoadingName] = useState<boolean>(true);
   const [openMenu, setOpenMenu] = useState(false);
+  const [showUpdateUserProfileModal, setShowUpdateUserProfileModal] =
+    useState<boolean>(false);
   const router = useRouter();
 
   useEffect(() => {
@@ -21,7 +24,6 @@ const Navbar = () => {
       try {
         const response = await axios.get(`/api/profile`);
         const data = response.data;
-        // console.log("data from fetch user", data);
         setUser(data);
         setLoadingName(false);
       } catch (err) {
@@ -38,7 +40,6 @@ const Navbar = () => {
     try {
       const response = await axios.get("/api/signout");
       console.log(response.data);
-      toast.success(response.data.message);
       router.push("/");
       setLoadingSignOut((prev) => !prev);
     } catch (error) {
@@ -150,13 +151,18 @@ const Navbar = () => {
       </div>
       <div className="flex flex-row-reverse items-center gap-2">
         <div className="h-[40px] w-[40px] shrink-0 relative rounded-[10%] overflow-hidden">
-          <Image
-            src={"/images/no_user.png"}
-            alt="profile"
-            height={40}
-            width={40}
-            className="object-cover"
-          />
+          {loadingName ? (
+            <LoadingSkeleton />
+          ) : (
+            <Image
+              src={user?.image === "" ? "/images/no_user.png" : user?.image}
+              alt="profile"
+              height={100}
+              width={100}
+              className="object-cover w-full h-full cursor-pointer"
+              onClick={() => setShowUpdateUserProfileModal((prev) => !prev)}
+            />
+          )}
         </div>
         <div>
           {loadingName ? (
@@ -171,6 +177,14 @@ const Navbar = () => {
           </p>
         </div>
       </div>
+      {showUpdateUserProfileModal && (
+        <UpdateUserProfileModal
+          Name={user?.name}
+          UserImage={user?.image}
+          setShowUpdateUserProfileModal={setShowUpdateUserProfileModal}
+          md={true}
+        />
+      )}
     </div>
   );
 };

@@ -12,6 +12,7 @@ import {
   hashPassword,
 } from "@/utils/functions";
 import userTasks from "@/models/userTasks";
+import { revalidatePath } from "next/cache";
 
 /*------- Sign Up user Action -------*/
 export const handleSignUpAction = async (
@@ -166,7 +167,6 @@ export const handleAddTaskAction = async (
   }
 
   title = capitalizeFirstLetter(rawFromData.title);
-  description = capitalizeFirstLetter(rawFromData.description);
 
   if (title.length === 0) {
     errors.title = "* Title should not be empty";
@@ -199,9 +199,11 @@ export const handleAddTaskAction = async (
   };
 
   userTasks.create(taskData);
-
+  revalidatePath("/dashboard", "page");
   console.log(rawFromData, title, description);
-  return {};
+  return {
+    success: "Task added successfully",
+  };
 };
 
 /*------- Update User Tasks Action -------*/
@@ -232,7 +234,6 @@ export const handleUpdateTaskAction = async (
   }
 
   title = capitalizeFirstLetter(rawFromData.title);
-  description = capitalizeFirstLetter(rawFromData.description);
 
   if (title.length === 0) {
     errors.title = "* Title should not be empty";

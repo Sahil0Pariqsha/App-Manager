@@ -10,7 +10,8 @@ type FormDataErrors = {
 type AddTaskFromErrors = {
   title?: string | null;
   description?: string | null;
-}
+  success?: string | null;
+};
 
 type UpdateTaskFromErrors = {
   title?: string | null;
@@ -20,4 +21,4 @@ type UpdateTaskFromErrors = {
 type UpdateUserProfileErrors = {
   nameError?: string | null;
   imageError?: string | null;
-}
+};

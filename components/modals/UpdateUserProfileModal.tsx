@@ -1,7 +1,7 @@
 "use client";
 import { handleUpdateUserProfileAction } from "@/lib/actions";
 import Image from "next/image";
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import { useFormState } from "react-dom";
 import UserImageModal from "./UserImageModal";
 import LoadingSpinner from "../LoadingSpinner";
@@ -16,6 +16,7 @@ const UpdateUserProfileModal = ({
   const [showUserImage, setShowUserImage] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
   const [image, setImage] = useState<any>("");
+  const updateUserForm = useRef<HTMLFormElement>(null);
 
   const initialState = {
     nameError: null,
@@ -47,14 +48,12 @@ const UpdateUserProfileModal = ({
       >
         <form
           className="p-6 min-w-[300px] mx-auto flex flex-col gap-6"
-          id="update-user-form"
           action={async (formData) => {
             setLoading((prev) => !prev);
             await formAction(formData); //* loading state not working if i remove await from here
-            const myForm = document.getElementById(
-              "update-user-form"
-            ) as HTMLFormElement;
-            myForm.reset();
+            if (updateUserForm.current) {
+              updateUserForm.current.reset();
+            }
             setLoading((prev) => !prev);
           }}
         >

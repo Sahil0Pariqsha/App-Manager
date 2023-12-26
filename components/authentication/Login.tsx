@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import ForgetPassword from "./ForgetPassword";
 import { handleLogInAction } from "@/lib/actions";
 import { useFormState } from "react-dom";
@@ -23,7 +23,8 @@ const Login = ({ setLoginForm }: any) => {
   const [loading, setLoading] = useState<boolean>(false);
   const [passwordType, setPasswordType] = useState<string>("password");
   const [showPassword, setShowPassword] = useState<boolean>(false);
-
+    const loginForm = useRef<HTMLFormElement>(null);
+  
   const handlePasswordClick = () => {
     setShowPassword((prevState) => !prevState);
     setPasswordType(`${passwordType === "password" ? "text" : "password"}`);
@@ -39,14 +40,12 @@ const Login = ({ setLoginForm }: any) => {
       </h1>
       <form
         className="w-[65%] min-w-[300px] mx-auto px-4 flex flex-col gap-6"
-        id="login-form"
         action={async (fromData) => {
           setLoading((prev) => !prev);
           await formAction(fromData);
-          const myForm = document.getElementById(
-            "login-form"
-          ) as HTMLFormElement;
-          myForm.reset();
+          if(loginForm.current) {
+            loginForm.current.reset();
+          }
           setLoading((prev) => !prev);
         }}
       >

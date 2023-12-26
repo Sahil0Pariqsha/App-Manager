@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import ForgetPassword from "./ForgetPassword";
 import { handleSignUpAction } from "@/lib/actions";
 import { useFormState } from "react-dom";
@@ -27,6 +27,8 @@ const Signup = ({ setLoginForm }: any) => {
   const [showPassword, setShowPassword] = useState<boolean>(false);
   const [showConfirmPassword, setShowConfirmPassword] =
     useState<boolean>(false);
+
+  const signupFrom = useRef<HTMLFormElement>(null);
 
   // Function to Hide/Un-hide password
   const handlePasswordClick = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -56,10 +58,12 @@ const Signup = ({ setLoginForm }: any) => {
         action={async (fromData) => {
           setLoading((prev) => !prev);
           await formAction(fromData);
+          if (signupFrom.current) {
+            signupFrom.current.reset();
+          }
           setLoading((prev) => !prev);
         }}
         className="w-[65%] min-w-[300px] mx-auto px-4 flex flex-col gap-6"
-        id="signup-form"
       >
         <input
           type="text"

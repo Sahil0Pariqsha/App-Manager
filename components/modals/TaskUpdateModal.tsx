@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import LoadingSpinner from "../LoadingSpinner";
 import { useRouter } from "next/navigation";
 import { useFormState } from "react-dom";
@@ -21,6 +21,7 @@ const TaskUpdateModal = ({
   const [descriptionValue, setDescriptionValue] = useState<string>(description);
   const [statusValue, setStatusValue] = useState<boolean>(status);
   const [importantValue, setImportantValue] = useState<boolean>(important);
+  const updateTaskForm = useRef<HTMLFormElement>(null);
 
   useEffect(() => {
     if (statusValue === false) {
@@ -61,15 +62,13 @@ const TaskUpdateModal = ({
           </button>
         </div>
         <form
-          id="add-task-form"
           className="p-6 w-[65%] min-w-[300px] mx-auto flex flex-col gap-6"
           action={async (formData) => {
             setLoading((prev) => !prev);
             await formAction(formData);
-            const myForm = document.getElementById(
-              "add-task-form"
-            ) as HTMLFormElement;
-            myForm.reset();
+            if (updateTaskForm.current) {
+              updateTaskForm.current.reset();
+            }
             setLoading((prev) => !prev);
           }}
         >

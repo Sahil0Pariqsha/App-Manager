@@ -6,7 +6,6 @@ import { NextRequest } from "next/server";
 export async function GET(request: Request | NextRequest) {
   try {
     const auth = cookies().get("userToken") || "";
-    console.log("auth token from Profile Route :", auth);
     if (!auth) {
       return new Response("Unauthorized", {
         status: 401,

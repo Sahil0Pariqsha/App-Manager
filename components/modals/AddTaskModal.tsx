@@ -1,7 +1,7 @@
 "use client";
 import { handleAddTaskAction } from "@/lib/actions";
 import { useRouter } from "next/navigation";
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import { useFormState } from "react-dom";
 import LoadingSpinner from "../LoadingSpinner";
 
@@ -13,6 +13,7 @@ const AddTaskModal = ({
   const [selectedOption, setSelectedOption] = useState("");
   const [loading, setLoading] = useState<boolean>(false);
   const router = useRouter();
+  const addTaskForm = useRef<HTMLFormElement>(null);
 
   const initialStateErrors: AddTaskFromErrors = {
     title: null,
@@ -44,15 +45,14 @@ const AddTaskModal = ({
         </button>
       </div>
       <form
-        id="add-task-from"
         className="p-6 w-[65%] min-w-[300px] mx-auto flex flex-col gap-6"
+        ref={addTaskForm}
         action={async (fromData) => {
           setLoading((prev) => !prev);
-          await formAction(fromData);
-          const myForm = document.getElementById(
-            "add-task-from"
-          ) as HTMLFormElement;
-          myForm.reset();
+          const res = await formAction(fromData);
+          if (addTaskForm.current) {
+            addTaskForm.current.reset();
+          }
           setLoading((prev) => !prev);
         }}
       >

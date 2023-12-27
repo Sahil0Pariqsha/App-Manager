@@ -3,7 +3,7 @@ import { extractTokenPayload } from "@/utils/functions";
 import { cookies } from "next/headers";
 import { NextRequest } from "next/server";
 
-export async function GET(request: Request | NextRequest) {
+export async function GET() {
   try {
     const auth = cookies().get("userToken") || ("" as any);
     if (!auth) {

@@ -1,5 +1,4 @@
 "use client";
-import axios from "axios";
 import { usePathname } from "next/navigation";
 import React, { useState } from "react";
 import { toast } from "react-toastify";
@@ -28,28 +27,6 @@ const TaskCard = ({ id, title, description, status, important, date }: any) => {
 
   const handleTaskDelete = async () => {
     console.log("task deleting with name : ", title, id, pathName);
-    {
-      // try {
-      //   let response;
-      //   if (pathName === "/dashboard") {
-      //     response = await axios.delete(`/api/taskslist?id=${id}`);
-      //   } else if (pathName === "/dashboard/important") {
-      //     response = await axios.patch(`/api/taskslist/important?id=${id}`);
-      //   } else if (pathName === "/dashboard/doitnow") {
-      //     response = await axios.patch(`/api/taskslist/doitnow?id=${id}`);
-      //   } else if (pathName === "/dashboard/completed") {
-      //     response = await axios.delete(`/api/taskslist/completed?id=${id}`);
-      //   }
-      //   const data = response?.data;
-      //   console.log("Delete request data :", data);
-      //   revalidatePath("/dashboard");
-      //   // window.location.reload();
-      //   toast.success("Task deleted successfully");
-      // } catch (error) {
-      //   console.log(error);
-      //   toast.error("Failed to delete task");
-      // }
-    }
     try {
       let response;
       const params = new URLSearchParams({ id });

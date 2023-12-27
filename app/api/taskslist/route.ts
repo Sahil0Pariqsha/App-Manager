@@ -1,8 +1,5 @@
-// "use server";
 import userTasks from "@/models/userTasks";
 import { extractTokenPayload } from "@/utils/functions";
-import { revalidatePath } from "next/cache";
-import { cookies } from "next/headers";
 import { NextRequest } from "next/server";
 
 export async function GET(request: NextRequest) {

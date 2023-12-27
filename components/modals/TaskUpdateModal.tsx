@@ -17,7 +17,7 @@ const TaskUpdateModal = ({
   const [loading, setLoading] = useState<boolean>(false);
   const router = useRouter();
   const pathName = usePathname();
-  console.log("updatetask modal pathName : ", pathName);
+  // console.log("updatetask modal pathName : ", pathName);
 
   const [titleValue, setTitleValue] = useState<string>(title);
   const [descriptionValue, setDescriptionValue] = useState<string>(description);

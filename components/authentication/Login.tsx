@@ -23,8 +23,8 @@ const Login = ({ setLoginForm }: any) => {
   const [loading, setLoading] = useState<boolean>(false);
   const [passwordType, setPasswordType] = useState<string>("password");
   const [showPassword, setShowPassword] = useState<boolean>(false);
-    const loginForm = useRef<HTMLFormElement>(null);
-  
+  const loginForm = useRef<HTMLFormElement>(null);
+
   const handlePasswordClick = () => {
     setShowPassword((prevState) => !prevState);
     setPasswordType(`${passwordType === "password" ? "text" : "password"}`);
@@ -43,7 +43,7 @@ const Login = ({ setLoginForm }: any) => {
         action={async (fromData) => {
           setLoading((prev) => !prev);
           await formAction(fromData);
-          if(loginForm.current) {
+          if (loginForm.current) {
             loginForm.current.reset();
           }
           setLoading((prev) => !prev);

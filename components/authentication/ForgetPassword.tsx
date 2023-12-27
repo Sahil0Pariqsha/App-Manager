@@ -2,10 +2,7 @@
 import React from "react";
 
 const ForgetPassword = () => {
-  const handleForgetPassword = () => {
-
-
-  };
+  const handleForgetPassword = () => {};
 
   return (
     <div>

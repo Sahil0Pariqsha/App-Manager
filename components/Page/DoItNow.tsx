@@ -1,11 +1,8 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import TasksContainer from "../TasksContainer";
-import { usePathname } from "next/navigation";
-
 const DoItNow = ({ taskList }: any) => {
   const [loading, setLoading] = useState<boolean>(true);
-  const pathName = usePathname();
   useEffect(() => {
     setLoading(false);
   }, []);

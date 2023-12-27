@@ -31,9 +31,7 @@ const TasksContainer = ({ title, taskList, loading }: any) => {
               onClick={() => setShowTaskModal(false)}
             ></div>
             <div className="absolute top-[50%] left-[50%] -translate-x-2/4 -translate-y-2/4 z-10">
-              <AddTaskModal
-                setShowTaskModal={setShowTaskModal}
-              />
+              <AddTaskModal setShowTaskModal={setShowTaskModal} />
             </div>
           </>
         )}

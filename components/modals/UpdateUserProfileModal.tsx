@@ -52,7 +52,7 @@ const UpdateUserProfileModal = ({
           className="p-6 min-w-[300px] mx-auto flex flex-col gap-6"
           action={async (formData) => {
             setLoading((prev) => !prev);
-            await formAction(formData); //* loading state not working if i remove await from here
+            await formAction(formData); //* loading state not working without await 
             if (updateUserForm.current) {
               updateUserForm.current.reset();
             }

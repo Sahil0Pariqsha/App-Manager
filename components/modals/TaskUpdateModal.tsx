@@ -1,9 +1,9 @@
 "use client";
 import React, { useEffect, useRef, useState } from "react";
 import LoadingSpinner from "../LoadingSpinner";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useFormState } from "react-dom";
-import { handleUpdateTaskAction } from "@/lib/actions";
+import { handleUpdateTaskAction, revalidate } from "@/lib/actions";
 
 const TaskUpdateModal = ({
   setShowTaskUpdateModal,
@@ -16,6 +16,8 @@ const TaskUpdateModal = ({
   const [selectedOption, setSelectedOption] = useState("");
   const [loading, setLoading] = useState<boolean>(false);
   const router = useRouter();
+  const pathName = usePathname();
+  console.log("updatetask modal pathName : ", pathName);
 
   const [titleValue, setTitleValue] = useState<string>(title);
   const [descriptionValue, setDescriptionValue] = useState<string>(description);
@@ -70,6 +72,10 @@ const TaskUpdateModal = ({
               updateTaskForm.current.reset();
             }
             setLoading((prev) => !prev);
+            revalidate(pathName);
+            setTimeout(() => {
+              setShowTaskUpdateModal((prev: boolean) => !prev);
+            }, 500);
           }}
         >
           {/* Hidden Input for TaskId : helps updating the task using form server actions */}

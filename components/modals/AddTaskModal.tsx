@@ -53,7 +53,11 @@ const AddTaskModal = ({
           if (addTaskForm.current) {
             addTaskForm.current.reset();
           }
+          () => console.log(state.success);
           setLoading((prev) => !prev);
+          setTimeout(() => {
+            setShowTaskModal((prev: boolean) => !prev);
+          }, 500);
         }}
       >
         <input

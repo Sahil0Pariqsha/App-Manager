@@ -1,10 +1,11 @@
 "use client";
-import { handleUpdateUserProfileAction } from "@/lib/actions";
+import { handleUpdateUserProfileAction, revalidate } from "@/lib/actions";
 import Image from "next/image";
 import React, { useRef, useState } from "react";
 import { useFormState } from "react-dom";
 import UserImageModal from "./UserImageModal";
 import LoadingSpinner from "../LoadingSpinner";
+import { usePathname } from "next/navigation";
 
 const UpdateUserProfileModal = ({
   Name,
@@ -17,6 +18,7 @@ const UpdateUserProfileModal = ({
   const [loading, setLoading] = useState<boolean>(false);
   const [image, setImage] = useState<any>("");
   const updateUserForm = useRef<HTMLFormElement>(null);
+  const pathName = usePathname();
 
   const initialState = {
     nameError: null,
@@ -54,7 +56,11 @@ const UpdateUserProfileModal = ({
             if (updateUserForm.current) {
               updateUserForm.current.reset();
             }
+            revalidate(pathName);
             setLoading((prev) => !prev);
+            setTimeout(() => {
+              setShowUpdateUserProfileModal((prev: boolean) => !prev);
+            }, 500);
           }}
         >
           <div className="flex gap-4">

@@ -350,3 +350,8 @@ export const handleUpdateUserProfileAction = async (
 
   return {};
 };
+
+export async function revalidate(pathName: string) {
+  console.log("revalidate server action path ----> ", pathName);
+  revalidatePath(pathName);
+}

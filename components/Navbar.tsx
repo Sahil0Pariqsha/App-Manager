@@ -8,8 +8,7 @@ import { toast } from "react-toastify";
 import LoadingSpinner, { LoadingSkeleton } from "./LoadingSpinner";
 import UpdateUserProfileModal from "./modals/UpdateUserProfileModal";
 
-const Navbar = () => {
-  const [user, setUser] = useState<any>(null);
+const Navbar = ({ user }: any) => {
   const pathName = usePathname();
   const [selectedTab, setSelectedTab] = useState<string>(pathName);
   const [loadingSignOut, setLoadingSignOut] = useState<boolean>(false);
@@ -20,19 +19,8 @@ const Navbar = () => {
   const router = useRouter();
 
   useEffect(() => {
-    const fetchUserData = async () => {
-      try {
-        const response = await axios.get(`/api/profile`);
-        const data = response.data;
-        setUser(data);
-        setLoadingName(false);
-      } catch (err) {
-        console.log(err);
-        router.push("/");
-      }
-    };
-    fetchUserData();
-  }, [router]);
+    setLoadingName(false);
+  }, []);
 
   const handleSignOut = async () => {
     setSelectedTab("signOut");

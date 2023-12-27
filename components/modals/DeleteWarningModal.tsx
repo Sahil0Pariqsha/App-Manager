@@ -10,9 +10,11 @@ const DeleteWarningModal = ({ setShowDeleteWarningModal, taskId }: any) => {
         `/api/taskslist/completed?id=${taskId}`
       );
       toast.success("Task deleted successfully");
+      setShowDeleteWarningModal((prev: boolean) => !prev);
     } catch (error) {
       toast.error("Failed to delete task");
       console.log("Error deleting task", error);
+      setShowDeleteWarningModal((prev: boolean) => !prev);
     }
   };
 
@@ -24,9 +26,11 @@ const DeleteWarningModal = ({ setShowDeleteWarningModal, taskId }: any) => {
       );
       console.log(response);
       toast.success("Task updated successfully");
+      setShowDeleteWarningModal((prev: boolean) => !prev);
     } catch (error) {
       toast.error("Failed to update task");
       console.log("Error updating task", error);
+      setShowDeleteWarningModal((prev: boolean) => !prev);
     }
   };
 

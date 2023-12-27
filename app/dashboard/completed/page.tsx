@@ -1,28 +1,20 @@
-"use client";
-import TasksContainer from "@/components/TasksContainer";
-import axios from "axios";
-import React, { useEffect, useState } from "react";
+import { cookies } from "next/headers";
+import Completed from "@/components/Page/Completed";
 
-const Completed = () => {
-  const [taskList, setTaskList] = useState<any>([]);
-  const [loading, setLoading] = useState<boolean>(true);
-
-  const fetchTaskList = async () => {
-    const response = await axios.get("/api/taskslist/completed");
-    const data = await response.data;
-    setTaskList(data);
-    setLoading(false);
-  };
-
-  useEffect(() => {
-    fetchTaskList();
-  }, []);
+export default async function Page() {
+  const res = await fetch("http://localhost:3000/api/taskslist/completed", {
+    cache: "no-store",
+    headers: {
+      cookie: cookies().toString(),
+      "Content-Type": "application/json",
+    },
+    credentials: "include",
+  });
+  const data = await res.json();
 
   return (
     <div className="flex-1 bg-[#212121] border-2 border-[#323232] rounded-2xl">
-      <TasksContainer title={"Completed"} taskList={taskList} loading={loading} />
+      <Completed taskList={data} />
     </div>
   );
-};
-
-export default Completed;
+}

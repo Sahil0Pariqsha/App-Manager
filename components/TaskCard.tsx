@@ -2,9 +2,10 @@
 import axios from "axios";
 import { usePathname } from "next/navigation";
 import React, { useState } from "react";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import DeleteWarningModal from "./modals/DeleteWarningModal";
 import TaskUpdateModal from "./modals/TaskUpdateModal";
+import { revalidate } from "@/lib/actions";
 
 const TaskCard = ({ id, title, description, status, important, date }: any) => {
   const [showDeleteWarningModal, setShowDeleteWarningModal] =
@@ -27,21 +28,59 @@ const TaskCard = ({ id, title, description, status, important, date }: any) => {
 
   const handleTaskDelete = async () => {
     console.log("task deleting with name : ", title, id, pathName);
+    {
+      // try {
+      //   let response;
+      //   if (pathName === "/dashboard") {
+      //     response = await axios.delete(`/api/taskslist?id=${id}`);
+      //   } else if (pathName === "/dashboard/important") {
+      //     response = await axios.patch(`/api/taskslist/important?id=${id}`);
+      //   } else if (pathName === "/dashboard/doitnow") {
+      //     response = await axios.patch(`/api/taskslist/doitnow?id=${id}`);
+      //   } else if (pathName === "/dashboard/completed") {
+      //     response = await axios.delete(`/api/taskslist/completed?id=${id}`);
+      //   }
+      //   const data = response?.data;
+      //   console.log("Delete request data :", data);
+      //   revalidatePath("/dashboard");
+      //   // window.location.reload();
+      //   toast.success("Task deleted successfully");
+      // } catch (error) {
+      //   console.log(error);
+      //   toast.error("Failed to delete task");
+      // }
+    }
     try {
       let response;
+      const params = new URLSearchParams({ id });
+      console.log("Entered Try Block of delete");
       if (pathName === "/dashboard") {
-        response = await axios.delete(`/api/taskslist?id=${id}`);
+        response = await fetch(`/api/taskslist?id=${id}`, {
+          method: "DELETE",
+          cache: "no-store",
+        });
       } else if (pathName === "/dashboard/important") {
-        response = await axios.patch(`/api/taskslist/important?id=${id}`);
+        response = await fetch(`/api/taskslist/important?id=${id}`, {
+          method: "PATCH",
+          cache: "no-store",
+        });
       } else if (pathName === "/dashboard/doitnow") {
-        response = await axios.patch(`/api/taskslist/doitnow?id=${id}`);
+        response = await fetch(`/api/taskslist/doitnow?id=${id}`, {
+          method: "PATCH",
+          cache: "no-store",
+        });
       } else if (pathName === "/dashboard/completed") {
-        response = await axios.delete(`/api/taskslist/completed?id=${id}`);
+        response = await fetch(`/api/taskslist/completed?id=${id}`, {
+          method: "DELETE",
+          cache: "no-store",
+        });
       }
-      const data = response?.data;
+
+      const data = await response?.json();
       console.log("Delete request data :", data);
       // window.location.reload();
       toast.success("Task deleted successfully");
+      revalidate(pathName);
     } catch (error) {
       console.log(error);
       toast.error("Failed to delete task");

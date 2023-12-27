@@ -2,7 +2,9 @@ import { cookies } from "next/headers";
 import Dashboard from "@/components/Page/Dashboard";
 
 export default async function Page() {
-  const res = await fetch("http://localhost:3000/api/taskslist", {
+  const host = process.env.NEXT_PUBLIC_HOST + "/api/taskslist";
+
+  const res = await fetch(host, {
     cache: "no-store",
     headers: {
       cookie: cookies().toString(),

@@ -7,7 +7,8 @@ export default async function DashboardLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const res = await fetch("http://localhost:3000/api/profile", {
+  const host = process.env.NEXT_PUBLIC_HOST + "/api/profile";
+  const res = await fetch(host, {
     cache: "no-store",
     headers: {
       cookie: cookies().toString(),
@@ -15,6 +16,7 @@ export default async function DashboardLayout({
     },
     credentials: "include",
   });
+  console.log("Layout Host ------ ", process.env.NEXT_PUBLIC_HOST, host);
   const data = await res.json();
 
   return (

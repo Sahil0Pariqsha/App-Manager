@@ -2,7 +2,8 @@ import { cookies } from "next/headers";
 import Completed from "@/components/Page/Completed";
 
 export default async function Page() {
-  const res = await fetch("http://localhost:3000/api/taskslist/completed", {
+  const host = process.env.NEXT_PUBLIC_HOST + "/api/taskslist/completed";
+  const res = await fetch(host, {
     cache: "no-store",
     headers: {
       cookie: cookies().toString(),

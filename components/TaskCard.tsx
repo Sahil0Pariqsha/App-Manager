@@ -26,7 +26,7 @@ const TaskCard = ({ id, title, description, status, important, date }: any) => {
   });
 
   const handleTaskDelete = async () => {
-    console.log("task deleting with name : ", title, id, pathName);
+    // console.log("task deleting with name : ", title, id, pathName);
     try {
       let response;
       const params = new URLSearchParams({ id });

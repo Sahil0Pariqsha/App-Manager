@@ -2,7 +2,8 @@ import { cookies } from "next/headers";
 import Important from "@/components/Page/Important";
 
 export default async function Page() {
-  const res = await fetch("http://localhost:3000/api/taskslist/important", {
+  const host = process.env.NEXT_PUBLIC_HOST + "/api/taskslist/important";
+  const res = await fetch(host, {
     cache: "no-store",
     headers: {
       cookie: cookies().toString(),

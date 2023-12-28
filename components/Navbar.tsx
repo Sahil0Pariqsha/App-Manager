@@ -27,12 +27,12 @@ const Navbar = ({ user }: any) => {
     setLoadingSignOut((prev) => !prev);
     try {
       const response = await axios.get("/api/signout");
-      console.log(response.data);
+      // console.log(response.data);
       router.push("/");
       setLoadingSignOut((prev) => !prev);
     } catch (error) {
       toast.error("Failed to sign out user");
-      console.log(error);
+      // console.log(error);
       setLoadingSignOut((prev) => !prev);
     }
   };

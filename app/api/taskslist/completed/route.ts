@@ -55,7 +55,7 @@ export async function DELETE(req: Request | NextRequest) {
 
     const deleteTask = await userTasks.deleteOne({ _id: taskId });
 
-    console.log(deleteTask, taskId, urlParams);
+    // console.log(deleteTask, taskId, urlParams);
 
     if (deleteTask) {
       return new Response(
@@ -76,11 +76,11 @@ export async function DELETE(req: Request | NextRequest) {
 }
 
 export async function PATCH(req: Request | NextRequest) {
-  console.log("Patch Req");
+  // console.log("Patch Req");
   try {
     const urlParams = new URL(req.url!);
     const taskId = urlParams.searchParams.get("id");
-    console.log(urlParams, taskId);
+    // console.log(urlParams, taskId);
 
     if (!taskId) {
       return new Response(JSON.stringify({ message: "Task ID is required" }), {
@@ -88,7 +88,7 @@ export async function PATCH(req: Request | NextRequest) {
       });
     }
 
-    console.log("Patch req task", taskId);
+    // console.log("Patch req task", taskId);
     const task = await userTasks.findOne({ _id: taskId });
     if (!task) {
       return new Response(JSON.stringify({ message: "Task not found" }), {
@@ -103,7 +103,7 @@ export async function PATCH(req: Request | NextRequest) {
       }
     );
 
-    console.log(updateTask, taskId, urlParams);
+    // console.log(updateTask, taskId, urlParams);
 
     if (updateTask) {
       return new Response(

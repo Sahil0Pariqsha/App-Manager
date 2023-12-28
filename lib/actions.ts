@@ -14,12 +14,14 @@ import {
 import userTasks from "@/models/userTasks";
 import { revalidatePath } from "next/cache";
 
+dbConnect();
+
 /*------- Sign Up user Action -------*/
 export const handleSignUpAction = async (
   prevState: any,
   formData: FormData
 ): Promise<FormDataErrors> => {
-  await dbConnect();
+  // await dbConnect();
   const rawFromData = {
     Name: formData.get("name"),
     Email: formData.get("email"),
@@ -68,8 +70,8 @@ export const handleSignUpAction = async (
 
   await user.create(userData);
 
-  console.log("Signup Successful", formData);
-  console.log("Validation Successful");
+  // console.log("Signup Successful", formData);
+  // console.log("Validation Successful");
 
   const userObj = await user.findOne({ email: Email });
   const userToken = generateToken(userObj._id);
@@ -86,7 +88,7 @@ export const handleLogInAction = async (
   prevState: any,
   formData: FormData
 ): Promise<FormDataErrors> => {
-  await dbConnect();
+  // await dbConnect();
   const errors: Partial<FormDataErrors> = {};
 
   const rawFromData = {
@@ -104,7 +106,7 @@ export const handleLogInAction = async (
   }
   try {
     var userExist = await user.findOne({ email: Email }); // declared var to access with in the block
-    console.log("Existing user object :", userExist);
+    // console.log("Existing user object :", userExist);
 
     if (!userExist) {
       errors.email = null;
@@ -123,7 +125,7 @@ export const handleLogInAction = async (
       }
     }
   } catch (error) {
-    console.log(error);
+    // console.log(error);
   }
 
   if (Object.keys(errors).length > 0) {
@@ -184,7 +186,7 @@ export const handleAddTaskAction = async (
   const { value }: any = tokenValue;
 
   const userId = await extractTokenPayload(value);
-  console.log(userId);
+  // console.log(userId);
 
   if (Object.keys(errors).length > 0) {
     return { ...prevState, ...errors };
@@ -200,7 +202,7 @@ export const handleAddTaskAction = async (
 
   userTasks.create(taskData);
   revalidatePath("/dashboard", "page");
-  console.log(rawFromData, title, description);
+  // console.log(rawFromData, title, description);
   return {
     success: "Task added successfully",
   };
@@ -264,11 +266,11 @@ export const handleUpdateTaskAction = async (
       { $set: taskData },
       { new: true }
     );
-    console.log("Updated task:", taskObj);
+    // console.log("Updated task:", taskObj);
   } catch (error) {
-    console.error("Error updating task:", error);
+    // console.error("Error updating task:", error);
   }
-  console.log(rawFromData, title, description);
+  // console.log(rawFromData, title, description);
   return {};
 };
 
@@ -320,7 +322,7 @@ export const handleUpdateUserProfileAction = async (
 
     const responseData = await response.json();
     const imageUrl = responseData.url;
-    console.log("Cloudinary Image URL inside:", imageUrl);
+    // console.log("Cloudinary Image URL inside:", imageUrl);
 
     const userData = {
       name: name
@@ -330,7 +332,7 @@ export const handleUpdateUserProfileAction = async (
       image: imageUrl,
     };
 
-    console.log("UserData:", userData);
+    // console.log("UserData:", userData);
 
     const tokenValue = cookies().get("userToken");
     const { value }: any = tokenValue;
@@ -343,15 +345,15 @@ export const handleUpdateUserProfileAction = async (
       { $set: userData },
       { new: true }
     );
-    console.log(userObj);
+    // console.log(userObj);
   } catch (error) {
-    console.error("Error:", error);
+    // console.error("Error:", error);
   }
 
   return {};
 };
 
 export async function revalidate(pathName: string) {
-  console.log("revalidate server action path ----> ", pathName);
+  // console.log("revalidate server action path ----> ", pathName);
   revalidatePath(pathName);
 }

@@ -44,7 +44,7 @@ const TaskUpdateModal = ({
 
   const handleOptionChange = (event: any) => {
     const value = event.target.value;
-    console.log(value);
+    // console.log(value);
     setSelectedOption(value);
   };
 

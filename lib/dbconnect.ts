@@ -4,6 +4,8 @@ declare global {
   var mongoConnection: any; // This must be a `var` and not a `let / const`
 }
 
+console.log(process.env.MONGODB_URI);
+
 const dbConnect = async () => {
   try {
     if (global.mongoConnection) {
@@ -22,3 +24,27 @@ const dbConnect = async () => {
 
 export default dbConnect;
 
+// import { MongoClient } from "mongodb";
+
+// const uri = process.env.MONGODB_URI!;
+// console.log("MonogoDB URI:", uri);
+
+// const client = new MongoClient(uri);
+
+// let db: any;
+
+// const dbConnect = async () => {
+//   try {
+//     if (!db) {
+//       await client.connect();
+//       db = client.db();
+//       console.log("Connected to MongoDB database");
+//     }
+//     return db;
+//   } catch (error) {
+//     console.error("Connection error:", error);
+//     throw error;
+//   }
+// };
+
+// export default dbConnect;

@@ -70,7 +70,7 @@ export async function DELETE(req: Request | NextRequest) {
       );
     }
   } catch (error) {
-    console.log(error);
+    // console.log(error);
   }
 }
 

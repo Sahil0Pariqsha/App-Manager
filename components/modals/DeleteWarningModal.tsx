@@ -13,23 +13,23 @@ const DeleteWarningModal = ({ setShowDeleteWarningModal, taskId }: any) => {
       setShowDeleteWarningModal((prev: boolean) => !prev);
     } catch (error) {
       toast.error("Failed to delete task");
-      console.log("Error deleting task", error);
+      // console.log("Error deleting task", error);
       setShowDeleteWarningModal((prev: boolean) => !prev);
     }
   };
 
   const makePendingCompletedTask = async () => {
     try {
-      console.log("makePendingCompletedTask", taskId);
+      // console.log("makePendingCompletedTask", taskId);
       const response = await axios.patch(
         `/api/taskslist/completed?id=${taskId}`
       );
-      console.log(response);
+      // console.log(response);
       toast.success("Task updated successfully");
       setShowDeleteWarningModal((prev: boolean) => !prev);
     } catch (error) {
       toast.error("Failed to update task");
-      console.log("Error updating task", error);
+      // console.log("Error updating task", error);
       setShowDeleteWarningModal((prev: boolean) => !prev);
     }
   };

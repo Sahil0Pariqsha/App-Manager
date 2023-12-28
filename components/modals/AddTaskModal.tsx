@@ -26,7 +26,7 @@ const AddTaskModal = ({
 
   const handleOptionChange = (event: any) => {
     const value = event.target.value;
-    console.log(value);
+    // console.log(value);
     setSelectedOption(value);
   };
 
@@ -53,7 +53,6 @@ const AddTaskModal = ({
           if (addTaskForm.current) {
             addTaskForm.current.reset();
           }
-          () => console.log(state.success);
           setLoading((prev) => !prev);
           setTimeout(() => {
             setShowTaskModal((prev: boolean) => !prev);

@@ -16,7 +16,7 @@ export default async function DashboardLayout({
     },
     credentials: "include",
   });
-  console.log("Layout Host ------ ", process.env.NEXT_PUBLIC_HOST, host);
+  console.log("Layout Host ------ ", process.env.NEXT_PUBLIC_HOST);
   const data = await res.json();
 
   return (

@@ -30,7 +30,7 @@ const UpdateUserProfileModal = ({
     initialState
   );
 
-  console.log(loading);
+  // console.log(loading);
   return (
     <>
       <div

@@ -62,7 +62,7 @@ export async function PATCH(req: Request | NextRequest) {
       }
     );
 
-    console.log(updateTask, taskId, urlParams);
+    // console.log(updateTask, taskId, urlParams);
 
     if (updateTask) {
       return new Response(
@@ -78,7 +78,7 @@ export async function PATCH(req: Request | NextRequest) {
       );
     }
   } catch (error) {
-    console.log(error);
+    // console.log(error);
   }
 }
 

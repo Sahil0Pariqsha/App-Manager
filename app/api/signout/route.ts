@@ -11,7 +11,7 @@ export async function GET(request: Request | NextRequest) {
     cookies().delete("userToken");
     return NextResponse.redirect(new URL("/", request.url));
   } catch (error) {
-    console.error(error);
+    // console.error(error);
     return NextResponse.json(
       { error: "Internal server error" },
       { status: 500 }

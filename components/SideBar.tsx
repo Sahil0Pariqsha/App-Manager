@@ -25,13 +25,13 @@ const SideBar = ({ user }: any) => {
     setLoadingSignOut((prev) => !prev);
     try {
       const response = await axios.get("/api/signout");
-      console.log(response.data);
+      // console.log(response.data);
       setLoadingSignOut((prev) => !prev);
       router.push("/");
     } catch (error) {
       setLoadingSignOut((prev) => !prev);
       toast.error("Failed to sign out user");
-      console.log(error);
+      // console.log(error);
     }
   };
 

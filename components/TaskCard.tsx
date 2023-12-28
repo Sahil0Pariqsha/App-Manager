@@ -30,7 +30,7 @@ const TaskCard = ({ id, title, description, status, important, date }: any) => {
     try {
       let response;
       const params = new URLSearchParams({ id });
-      console.log("Entered Try Block of delete");
+      // console.log("Entered Try Block of delete");
       if (pathName === "/dashboard") {
         response = await fetch(`/api/taskslist?id=${id}`, {
           method: "DELETE",
@@ -54,18 +54,18 @@ const TaskCard = ({ id, title, description, status, important, date }: any) => {
       }
 
       const data = await response?.json();
-      console.log("Delete request data :", data);
+      // console.log("Delete request data :", data);
       // window.location.reload();
       toast.success("Task deleted successfully");
       revalidate(pathName);
     } catch (error) {
-      console.log(error);
+      // console.log(error);
       toast.error("Failed to delete task");
     }
   };
 
   const handleDeleteWarning = () => {
-    console.log("handleDeleteWarning");
+    // console.log("handleDeleteWarning");
     setShowDeleteWarningModal(!showDeleteWarningModal);
   };
 

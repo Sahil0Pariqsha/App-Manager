@@ -15,7 +15,7 @@ export default async function Page() {
   const data = await res.json();
 
   return (
-    <div className="flex-1 bg-[#212121] border-2 border-[#323232] rounded-2xl">
+    <div className="flex-1 bg-[#212121] border-2 border-[#323232] rounded-xl md:rounded-2xl max-md:h-[calc(100vh-500px)]">
       <Dashboard taskList={data} />
     </div>
   );

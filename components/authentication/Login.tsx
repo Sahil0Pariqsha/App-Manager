@@ -3,8 +3,6 @@ import React, { useRef, useState } from "react";
 import ForgetPassword from "./ForgetPassword";
 import { handleLogInAction } from "@/lib/actions";
 import { useFormState } from "react-dom";
-import { ToastContainer, toast } from "react-toastify";
-import Image from "next/image";
 import LoadingSpinner from "../LoadingSpinner";
 
 const Login = ({ setLoginForm }: any) => {

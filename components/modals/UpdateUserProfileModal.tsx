@@ -33,19 +33,22 @@ const UpdateUserProfileModal = ({
   // console.log(loading);
   return (
     <>
-      <div
-        className="modal-wrapper absolute z-10 backdrop-blur-sm blur-sm bg-[#000000a7] top-0 left-0 bottom-0 right-0 rounded-2xl overflow-hidden h-full w-full"
-        onClick={() => setShowUpdateUserProfileModal(false)}
-      ></div>
+      {!md && (
+        <div
+          className="modal-wrapper absolute z-10 backdrop-blur-sm blur-sm bg-[#000000a7] top-0 left-0 bottom-0 right-0 rounded-2xl overflow-hidden h-full w-full"
+          onClick={() => setShowUpdateUserProfileModal(false)}
+        ></div>
+      )}
       {showUserImage && (
         <UserImageModal
           setShowUserImage={setShowUserImage}
           UserImage={UserImage}
+          md={md}
         />
       )}
       <div
         className={`bg-[#181818] rounded-xl border-2 border-[#323232] absolute top-2/4 left-2/4 -translate-x-2/4 ${
-          md ? " translate-y-[20%] " : " -translate-y-2/4 "
+          md ? " translate-y-[30%] " : " -translate-y-2/4 "
         } z-10`}
       >
         <form

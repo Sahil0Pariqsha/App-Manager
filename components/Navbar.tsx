@@ -40,7 +40,7 @@ const Navbar = ({ user }: any) => {
   let currentDate = new Date().toJSON().slice(0, 10);
 
   return (
-    <div className="w-full h-full flex justify-between items-center min-w-[190px] px-6 py-2 relative">
+    <div className="w-full h-full flex justify-between items-center min-w-[190px] px-6 py-2 relative border-2 border-[#323232] rounded-xl">
       <div>
         <button onClick={() => setOpenMenu(!openMenu)}>
           <i
@@ -53,7 +53,7 @@ const Navbar = ({ user }: any) => {
       <div
         className={`w-full ${
           openMenu ? "block" : "hidden"
-        } bg-[#212121] border-2 border-[#a0a0a0] rounded-2xl drop-shadow-2xl absolute top-0 left-0 translate-y-[30%] z-10 overflow-hidden`}
+        } bg-[#212121] border-2 border-[#4c4c4c] rounded-xl md:rounded-2xl drop-shadow-2xl absolute -top-1 left-0 translate-y-[30%] z-10 overflow-hidden`}
       >
         <ul className="flex flex-col text-[18px] gap-2 font-bold w-full text-left whitespace-nowrap">
           <Link href={"/dashboard"}>
@@ -166,12 +166,18 @@ const Navbar = ({ user }: any) => {
         </div>
       </div>
       {showUpdateUserProfileModal && (
-        <UpdateUserProfileModal
-          Name={user?.name}
-          UserImage={user?.image}
-          setShowUpdateUserProfileModal={setShowUpdateUserProfileModal}
-          md={true}
-        />
+        <>
+          <div
+            className="modal-wrapper fixed z-10 backdrop-blur-sm blur-sm bg-[#000000a7] top-0 left-0 bottom-0 right-0 rounded-2xl overflow-hidden h-full w-full"
+            onClick={() => setShowUpdateUserProfileModal(false)}
+          ></div>
+          <UpdateUserProfileModal
+            Name={user?.name}
+            UserImage={user?.image}
+            setShowUpdateUserProfileModal={setShowUpdateUserProfileModal}
+            md={true}
+          />
+        </>
       )}
     </div>
   );

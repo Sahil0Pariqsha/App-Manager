@@ -13,6 +13,7 @@ const config: Config = {
         Quicksand: ["Quicksand", "sans-serif"],
       },
     },
+    darkMode: "class",
   },
   plugins: [],
 };

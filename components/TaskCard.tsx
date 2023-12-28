@@ -70,9 +70,9 @@ const TaskCard = ({ id, title, description, status, important, date }: any) => {
   };
 
   return (
-    <div className="overflow-hidden rounded-2xl">
+    <div className="overflow-hidden rounded-md md:rounded-2xl">
       {/* Only to hide the scrollbar overflow on dashboard */}
-      <div className="w-full  bg-[#323232] border-[#404040] border-2 rounded-2xl px-3 py-4 flex flex-col gap-1 hover:bg-[#1a1a1a] transition-all ease-in-out duration-200 custom-scrollbar overflow-scroll">
+      <div className="w-full  bg-[#323232] border-[#404040] border-2 rounded-xl md:rounded-2xl px-3 py-4 flex flex-col gap-1 hover:bg-[#1a1a1a] transition-all ease-in-out duration-200 custom-scrollbar overflow-scroll">
         <div className="text-[22px] font-bold overflow-hidden text-ellipsis whitespace-nowrap border-b-2 border-[#404040]">
           {title}
         </div>
@@ -89,11 +89,11 @@ const TaskCard = ({ id, title, description, status, important, date }: any) => {
               status
                 ? "bg-green-500 hover:bg-green-600"
                 : "bg-red-500 hover:bg-red-600"
-            } w-fit px-3 py-1 rounded-full cursor-pointer  transition-all ease-in-out duration-200`}
+            } w-fit px-3 py-1 rounded-xl md:rounded-full cursor-pointer  transition-all ease-in-out duration-200`}
           >
             {status ? "Completed" : "Pending"}
           </div>
-          <div className="flex gap-3 text-[#babaca] font-bold bg-black/50 hover:bg-black/80 w-fit px-3 py-1 rounded-full cursor-pointer  transition-all ease-in-out duration-200">
+          <div className="flex gap-3 text-[#babaca] font-bold bg-black/50 hover:bg-black/80 w-fit px-3 py-1 rounded-xl md:rounded-full cursor-pointer  transition-all ease-in-out duration-200">
             <button
               className="hover:text-yellow-500 active:text-yellow-800 transition-all ease-in-out duration-200"
               onClick={() => setShowTaskUpdateModal((prev) => !prev)}

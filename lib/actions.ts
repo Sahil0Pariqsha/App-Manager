@@ -103,7 +103,7 @@ export const handleLogInAction = async (
     "  Password: ",
     formData.get("password")
   );
-  
+
   const { Email, Password } = rawFormData;
   if (!emailIsValid(Email)) {
     errors.email = "* Please enter a valid email address eg. test123@gmail.com";

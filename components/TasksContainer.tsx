@@ -10,8 +10,8 @@ const TasksContainer = ({ title, taskList, loading }: any) => {
   const pathName = usePathname();
 
   return (
-    <div className="flex flex-col px-8 relative gap-6 h-full">
-      <div className="flex justify-between py-4">
+    <div className="flex flex-col px-2 max-md:pb-1 md:px-8 relative gap-1 md:gap-6 h-full md:h-full">
+      <div className="flex justify-between py-3 md:py-4 max-md:px-2">
         <div className="flex flex-col justify-between text-[26px] font-bold">
           <h1 className="whitespace-nowrap">{title}</h1>
           <div className="w-[50%] h-[4px] bg-green-400 rounded-[16px] mb-2"></div>
@@ -37,7 +37,7 @@ const TasksContainer = ({ title, taskList, loading }: any) => {
         )}
       </div>
 
-      <div className="h-full overflow-y-scroll custom-scrollbar pb-4">
+      <div className="h-full overflow-y-scroll custom-scrollbar md:pb-4">
         {loading ? (
           <BigLoadingSpinner />
         ) : (

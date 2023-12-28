@@ -25,7 +25,7 @@ export default function RootLayout({
         />
       </head>
       <body
-        className={`bg-[#181818] text-white font-Quicksand w-[100vw] h-[100vh] overflow-hidden custom-scrollbar`}
+        className={`bg-[#181818] text-white font-Quicksand w-[100vw] h-[100vh] overflow-scroll custom-scrollbar`}
       >
         <ToastContainer
           position="top-right"

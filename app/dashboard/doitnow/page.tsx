@@ -14,7 +14,7 @@ export default async function Page() {
   const data = await res.json();
 
   return (
-    <div className="flex-1 bg-[#212121] border-2 border-[#323232] rounded-2xl">
+    <div className="flex-1 bg-[#212121] border-2 border-[#323232] rounded-xl md:rounded-2xl">
       <DoItNow taskList={data} />
     </div>
   );

@@ -20,8 +20,8 @@ export default async function DashboardLayout({
   const data = await res.json();
 
   return (
-    <section className="flex max-md:flex-col h-full w-full py-6 px-4 gap-8">
-      <div className="bg-[#212121] border-2 border-[#323232] rounded-2xl md:hidden sticky top-0 z-10 drop-shadow-2xl">
+    <section className="flex max-md:flex-col h-[calc(100vh-70px)] md:h-full w-full py-6 px-2 md:px-4 gap-8">
+      <div className="bg-[#1b1b1b] -my-6  md:hidden sticky top-0 z-10 shadow-md backdrop-blur-md rounded-b-2xl">
         <Navbar user={data} />
       </div>
       <div className="bg-[#212121] border-2 border-[#323232] rounded-2xl py-4 max-md:hidden">

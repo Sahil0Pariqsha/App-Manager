@@ -9,7 +9,7 @@ const Important = ({ taskList }: any) => {
   return (
     <>
       <TasksContainer
-        title={"All Tasks"}
+        title={"Important Tasks"}
         taskList={taskList}
         loading={loading}
       />

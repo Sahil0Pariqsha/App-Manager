@@ -15,6 +15,7 @@ import userTasks from "@/models/userTasks";
 import { revalidatePath } from "next/cache";
 
 dbConnect();
+// console.log(global.mongoConnection);
 
 /*------- Sign Up user Action -------*/
 export const handleSignUpAction = async (
@@ -22,14 +23,14 @@ export const handleSignUpAction = async (
   formData: FormData
 ): Promise<FormDataErrors> => {
   // await dbConnect();
-  const rawFromData = {
+  const rawFormData = {
     Name: formData.get("name"),
     Email: formData.get("email"),
     Password: formData.get("password"),
     Confirm_Password: formData.get("confirm-password"),
   };
 
-  const { Name, Email, Password, Confirm_Password } = rawFromData;
+  const { Name, Email, Password, Confirm_Password } = rawFormData;
   const errors: Partial<FormDataErrors> = {};
 
   /*------- User Input Validation -------*/
@@ -91,12 +92,12 @@ export const handleLogInAction = async (
   // await dbConnect();
   const errors: Partial<FormDataErrors> = {};
 
-  const rawFromData = {
+  const rawFormData = {
     Email: formData.get("email"),
     Password: formData.get("password"),
   };
 
-  const { Email, Password } = rawFromData;
+  const { Email, Password } = rawFormData;
   if (!emailIsValid(Email)) {
     errors.email = "* Please enter a valid email address eg. test123@gmail.com";
   }
@@ -146,17 +147,17 @@ export const handleLogInAction = async (
 export const handleAddTaskAction = async (
   prevState: any,
   formData: FormData
-): Promise<AddTaskFromErrors> => {
-  const errors: Partial<AddTaskFromErrors> = {};
+): Promise<AddTaskFormErrors> => {
+  const errors: Partial<AddTaskFormErrors> = {};
 
-  let rawFromData = {
+  let rawFormData = {
     title: formData.get("task_title"),
     description: formData.get("task_description"),
     status: formData.get("task_status"),
     important: formData.get("check_important"),
   };
 
-  let { title, description, status, important }: any = rawFromData;
+  let { title, description, status, important }: any = rawFormData;
   function capitalizeFirstLetter(string: any) {
     let words = string.trim().split(/\s+/);
 
@@ -168,7 +169,7 @@ export const handleAddTaskAction = async (
     return words.join(" ");
   }
 
-  title = capitalizeFirstLetter(rawFromData.title);
+  title = capitalizeFirstLetter(rawFormData.title);
 
   if (title.length === 0) {
     errors.title = "* Title should not be empty";
@@ -212,10 +213,10 @@ export const handleAddTaskAction = async (
 export const handleUpdateTaskAction = async (
   prevState: any,
   formData: FormData
-): Promise<AddTaskFromErrors> => {
-  const errors: Partial<AddTaskFromErrors> = {};
+): Promise<AddTaskFormErrors> => {
+  const errors: Partial<AddTaskFormErrors> = {};
 
-  let rawFromData = {
+  let rawFormData = {
     taskId: formData.get("taskId"),
     title: formData.get("task_title"),
     description: formData.get("task_description"),
@@ -223,7 +224,7 @@ export const handleUpdateTaskAction = async (
     important: formData.get("check_important"),
   };
 
-  let { taskId, title, description, status, important }: any = rawFromData;
+  let { taskId, title, description, status, important }: any = rawFormData;
   function capitalizeFirstLetter(string: any) {
     let words = string.trim().split(/\s+/);
 
@@ -235,7 +236,7 @@ export const handleUpdateTaskAction = async (
     return words.join(" ");
   }
 
-  title = capitalizeFirstLetter(rawFromData.title);
+  title = capitalizeFirstLetter(rawFormData.title);
 
   if (title.length === 0) {
     errors.title = "* Title should not be empty";
@@ -280,13 +281,13 @@ export const handleUpdateUserProfileAction = async (
 ): Promise<UpdateUserProfileErrors> => {
   const errors: Partial<UpdateUserProfileErrors> = {};
 
-  const rawFromData = {
+  const rawFormData = {
     name: formData.get("user_name"),
     image: formData.get("user_image"),
     base64: formData.get("user_base64"),
   };
 
-  const { name, image }: any = rawFromData;
+  const { name, image }: any = rawFormData;
 
   const MAX_IMAGE_SIZE = 5 * 1024 * 1024;
   if (image.size > MAX_IMAGE_SIZE) {

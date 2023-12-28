@@ -1,15 +1,25 @@
 "use client";
+import { revalidate } from "@/lib/actions";
 import axios from "axios";
+import { usePathname } from "next/navigation";
 import React from "react";
 import { toast } from "react-toastify";
 
 const DeleteWarningModal = ({ setShowDeleteWarningModal, taskId }: any) => {
+  const pathName = usePathname();
+
   const deleteCompletedTask = async () => {
     try {
-      const response = await axios.delete(
-        `/api/taskslist/completed?id=${taskId}`
-      );
-      toast.success("Task deleted successfully");
+      const response = await fetch(`/api/taskslist/completed?id=${taskId}`, {
+        method: "DELETE",
+      });
+
+      if (response.ok) {
+        toast.success("Task deleted successfully");
+      } else {
+        toast.error("Failed to delete task");
+      }
+      revalidate(pathName);
       setShowDeleteWarningModal((prev: boolean) => !prev);
     } catch (error) {
       toast.error("Failed to delete task");
@@ -21,11 +31,16 @@ const DeleteWarningModal = ({ setShowDeleteWarningModal, taskId }: any) => {
   const makePendingCompletedTask = async () => {
     try {
       // console.log("makePendingCompletedTask", taskId);
-      const response = await axios.patch(
-        `/api/taskslist/completed?id=${taskId}`
-      );
-      // console.log(response);
-      toast.success("Task updated successfully");
+      const response = await fetch(`/api/taskslist/completed?id=${taskId}`, {
+        method: "PATCH",
+      });
+
+      if (response.ok) {
+        toast.success("Task updated successfully");
+      } else {
+        toast.error("Failed to update task");
+      }
+      revalidate(pathName);
       setShowDeleteWarningModal((prev: boolean) => !prev);
     } catch (error) {
       toast.error("Failed to update task");

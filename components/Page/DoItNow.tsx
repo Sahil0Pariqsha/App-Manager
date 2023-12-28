@@ -9,7 +9,7 @@ const DoItNow = ({ taskList }: any) => {
   return (
     <>
       <TasksContainer
-        title={"All Tasks"}
+        title={"Pending Tasks"}
         taskList={taskList}
         loading={loading}
       />

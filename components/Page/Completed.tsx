@@ -10,7 +10,7 @@ export default function Completed({ taskList }: any) {
   return (
     <>
       <TasksContainer
-        title={"All Tasks"}
+        title={"Completed Tasks"}
         taskList={taskList}
         loading={loading}
       />

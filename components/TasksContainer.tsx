@@ -58,13 +58,7 @@ const TasksContainer = ({ title, taskList, loading }: any) => {
               })
             ) : (
               <p className="font-bold text-[35px] absolute top-2/4 left-2/4 translate-x-[-50%] translate-y-[-50%] animate-pulse bg-gradient-to-r from-blue-500 via-green-500 to-indigo-400 bg-clip-text text-transparent z-0">
-                {`Add ${
-                  title === "Do It Now"
-                    ? "Pending"
-                    : title === "All Tasks"
-                    ? ""
-                    : title
-                } Tasks to get started ...`}
+                {`Add ${title} to get started ...`}
               </p>
             )}
             {pathName === "/dashboard" && (

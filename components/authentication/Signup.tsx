@@ -7,7 +7,7 @@ import LoadingSpinner from "../LoadingSpinner";
 
 const Signup = ({ setLoginForm }: any) => {
   //From Action State
-  const initialFromErrorsState: FormDataErrors = {
+  const initialFormErrorsState: FormDataErrors = {
     name: null,
     confirm_password: null,
     email: null,
@@ -16,7 +16,7 @@ const Signup = ({ setLoginForm }: any) => {
 
   const [state, formAction] = useFormState(
     handleSignUpAction,
-    initialFromErrorsState
+    initialFormErrorsState
   );
 
   const [loading, setLoading] = useState<boolean>(false);
@@ -28,7 +28,7 @@ const Signup = ({ setLoginForm }: any) => {
   const [showConfirmPassword, setShowConfirmPassword] =
     useState<boolean>(false);
 
-  const signupFrom = useRef<HTMLFormElement>(null);
+  const signupForm = useRef<HTMLFormElement>(null);
 
   // Function to Hide/Un-hide password
   const handlePasswordClick = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -45,7 +45,7 @@ const Signup = ({ setLoginForm }: any) => {
   };
 
   // Function to change the from type [Login / Sign-up]
-  const handleFromChange = () => {
+  const handleFormChange = () => {
     setLoginForm((prevState: boolean) => !prevState);
   };
 
@@ -55,11 +55,11 @@ const Signup = ({ setLoginForm }: any) => {
         Sign up
       </h1>
       <form
-        action={async (fromData) => {
+        action={async (formData) => {
           setLoading((prev) => !prev);
-          await formAction(fromData);
-          if (signupFrom.current) {
-            signupFrom.current.reset();
+          await formAction(formData);
+          if (signupForm.current) {
+            signupForm.current.reset();
           }
           setLoading((prev) => !prev);
         }}
@@ -145,7 +145,7 @@ const Signup = ({ setLoginForm }: any) => {
       </form>
       <div className="w-fit mx-auto text-[#5F5F5F] font-Poppins mt-10">
         Already have account ?
-        <button onClick={handleFromChange}>
+        <button onClick={handleFormChange}>
           <span className="font-Poppins font-bold ml-2 text-white">Log in</span>
         </button>
       </div>

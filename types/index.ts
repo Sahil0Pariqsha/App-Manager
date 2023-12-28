@@ -7,13 +7,13 @@ type FormDataErrors = {
   userId?: string | null;
 };
 
-type AddTaskFromErrors = {
+type AddTaskFormErrors = {
   title?: string | null;
   description?: string | null;
   success?: string | null;
 };
 
-type UpdateTaskFromErrors = {
+type UpdateTaskFormErrors = {
   title?: string | null;
   description?: string | null;
 };

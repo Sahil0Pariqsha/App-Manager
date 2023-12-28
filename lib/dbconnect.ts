@@ -4,17 +4,16 @@ declare global {
   var mongoConnection: any; // This must be a `var` and not a `let / const`
 }
 
-console.log("DB URI :", process.env.MONGODB_URI);
-
 const dbConnect = async () => {
   try {
+    console.log("DB URI :", process.env.MONGODB_URI);
     if (global.mongoConnection) {
       console.log("Already connected");
       return global.mongoConnection;
     }
 
     const connection = await mongoose.connect(process.env.MONGODB_URI!);
-    console.log("Connected to DB", connection);
+    console.log("Connected to DB");
     global.mongoConnection = connection;
     return connection;
   } catch (error) {

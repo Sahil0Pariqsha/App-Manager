@@ -33,7 +33,7 @@ const TaskUpdateModal = ({
     }
   }, [statusValue]);
 
-  const initialStateErrors: UpdateTaskFromErrors = {
+  const initialStateErrors: UpdateTaskFormErrors = {
     title: null,
     description: null,
   };

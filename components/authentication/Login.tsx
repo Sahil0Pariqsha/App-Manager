@@ -8,7 +8,7 @@ import Image from "next/image";
 import LoadingSpinner from "../LoadingSpinner";
 
 const Login = ({ setLoginForm }: any) => {
-  const initialFromErrorsState: FormDataErrors = {
+  const initialFormErrorsState: FormDataErrors = {
     name: null,
     confirm_password: null,
     email: null,
@@ -18,7 +18,7 @@ const Login = ({ setLoginForm }: any) => {
 
   const [state, formAction] = useFormState(
     handleLogInAction,
-    initialFromErrorsState
+    initialFormErrorsState
   );
   const [loading, setLoading] = useState<boolean>(false);
   const [passwordType, setPasswordType] = useState<string>("password");
@@ -30,7 +30,7 @@ const Login = ({ setLoginForm }: any) => {
     setPasswordType(`${passwordType === "password" ? "text" : "password"}`);
   };
 
-  const handleFromChange = () => {
+  const handleFormChange = () => {
     setLoginForm((prevState: boolean) => !prevState);
   };
   return (
@@ -40,9 +40,9 @@ const Login = ({ setLoginForm }: any) => {
       </h1>
       <form
         className="w-[65%] min-w-[300px] mx-auto px-4 flex flex-col gap-6"
-        action={async (fromData) => {
+        action={async (formData) => {
           setLoading((prev) => !prev);
-          await formAction(fromData);
+          await formAction(formData);
           if (loginForm.current) {
             loginForm.current.reset();
           }
@@ -95,7 +95,7 @@ const Login = ({ setLoginForm }: any) => {
       </form>
       <div className="w-fit mx-auto text-[#5F5F5F] font-Poppins mt-10">
         Don&apos;t have an account ?
-        <button onClick={handleFromChange}>
+        <button onClick={handleFormChange}>
           <span className="font-Poppins font-bold ml-2 text-white">
             Sign up
           </span>

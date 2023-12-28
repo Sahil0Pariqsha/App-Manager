@@ -15,7 +15,7 @@ const AddTaskModal = ({
   const router = useRouter();
   const addTaskForm = useRef<HTMLFormElement>(null);
 
-  const initialStateErrors: AddTaskFromErrors = {
+  const initialStateErrors: AddTaskFormErrors = {
     title: null,
     description: null,
   };
@@ -47,9 +47,9 @@ const AddTaskModal = ({
       <form
         className="p-6 w-[65%] min-w-[300px] mx-auto flex flex-col gap-6"
         ref={addTaskForm}
-        action={async (fromData) => {
+        action={async (formData) => {
           setLoading((prev) => !prev);
-          const res = await formAction(fromData);
+          const res = await formAction(formData);
           if (addTaskForm.current) {
             addTaskForm.current.reset();
           }

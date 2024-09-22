@@ -8,7 +8,7 @@ export default async function DashboardLayout({
   children: React.ReactNode;
 }) {
   const baseUrl = process.env.NODE_ENV === 'development'
-  ? 'http://localhost:3000'
+  ? 'http://localhost:3000/'
   : 'https://app-manager-nextjs.vercel.app/';
 
   const apiUrl = `${baseUrl}api/profile`;

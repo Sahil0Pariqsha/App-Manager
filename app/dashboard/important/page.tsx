@@ -3,7 +3,7 @@ import Important from "@/components/Page/Important";
 
 export default async function Page() {  
   const baseUrl = process.env.NODE_ENV === 'development'
-  ? 'http://localhost:3000'
+  ? 'http://localhost:3000/'
   : 'https://app-manager-nextjs.vercel.app/';
 
   

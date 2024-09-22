@@ -3,7 +3,7 @@ import Dashboard from "@/components/Page/Dashboard";
 
 export default async function Page() {
   const baseUrl = process.env.NODE_ENV === 'development'
-  ? 'http://localhost:3000'
+  ? 'http://localhost:3000/'
   : 'https://app-manager-nextjs.vercel.app/';
 
   const apiUrl = `${baseUrl}api/taskslist`;

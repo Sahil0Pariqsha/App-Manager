@@ -2,11 +2,13 @@ import { cookies } from "next/headers";
 import Dashboard from "@/components/Page/Dashboard";
 
 export default async function Page() {
-  const host = process.env.NEXT_PUBLIC_HOST
-    ? `${process.env.NEXT_PUBLIC_HOST}/api/taskslist`
-    : "/api/taskslist";
+  const baseUrl = process.env.NODE_ENV === 'development'
+  ? 'http://localhost:3000'
+  : 'https://app-manager-nextjs.vercel.app/';
 
-  const res = await fetch(host, {
+  const apiUrl = `${baseUrl}/api/taskslist`;
+
+  const res = await fetch(apiUrl, {
     cache: "no-store",
     headers: {
       cookie: cookies().toString(),

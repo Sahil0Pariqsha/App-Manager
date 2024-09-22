@@ -67,7 +67,6 @@ npm install
 ### Step 3: Set Up Environment Variables
 Create a `.env.local` file in the root directory and add the following environment variables:
 ```bash
-NEXT_PUBLIC_HOST=http://localhost:3000
 MONGODB_URI=your_mongodb_connection_string
 JWT_SECRET=your_jwt_secret
 ```

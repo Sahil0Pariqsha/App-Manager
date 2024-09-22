@@ -7,12 +7,15 @@ export default async function DashboardLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const host =
-    process.env.NEXT_PUBLIC_HOST
-      ? `${process.env.NEXT_PUBLIC_HOST}/api/profile`  // For local development
-      : "/api/profile";  // For production (relative URL)
-      
-  const res = await fetch(host, {
+  const baseUrl = process.env.NODE_ENV === 'development'
+  ? 'http://localhost:3000'
+  : 'https://app-manager-nextjs.vercel.app/';
+
+  const apiUrl = `${baseUrl}/api/profile`;
+  
+  console.log(process.env.NODE_ENV,apiUrl);
+
+  const res = await fetch(apiUrl, {
     cache: "no-store",
     headers: {
       cookie: cookies().toString(),

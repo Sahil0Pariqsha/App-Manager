@@ -2,11 +2,13 @@ import { cookies } from "next/headers";
 import Completed from "@/components/Page/Completed";
 
 export default async function Page() {
-  const host = process.env.NEXT_PUBLIC_HOST
-  ? `${process.env.NEXT_PUBLIC_HOST}/api/taskslist/completed`  // For local development
-  : "/api/taskslist/completed";  // For production (relative URL)
-  
-  const res = await fetch(host, {
+  const baseUrl = process.env.NODE_ENV === 'development'
+  ? 'http://localhost:3000'
+  : 'https://app-manager-nextjs.vercel.app/';
+
+  const apiUrl = `${baseUrl}/api/taskslist/completed`;
+
+  const res = await fetch(apiUrl, {
     cache: "no-store",
     headers: {
       cookie: cookies().toString(),

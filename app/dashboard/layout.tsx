@@ -11,8 +11,8 @@ export default async function DashboardLayout({
   ? 'http://localhost:3000'
   : 'https://app-manager-nextjs.vercel.app/';
 
-  const apiUrl = `${baseUrl}/api/profile`;
-  
+  const apiUrl = `${baseUrl}api/profile`;
+
   console.log(process.env.NODE_ENV,apiUrl);
 
   const res = await fetch(apiUrl, {

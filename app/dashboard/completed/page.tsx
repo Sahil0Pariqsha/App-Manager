@@ -6,7 +6,7 @@ export default async function Page() {
   ? 'http://localhost:3000'
   : 'https://app-manager-nextjs.vercel.app/';
 
-  const apiUrl = `${baseUrl}/api/taskslist/completed`;
+  const apiUrl = `${baseUrl}api/taskslist/completed`;
 
   const res = await fetch(apiUrl, {
     cache: "no-store",

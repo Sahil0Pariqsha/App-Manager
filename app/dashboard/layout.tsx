@@ -7,7 +7,11 @@ export default async function DashboardLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const host = process.env.NEXT_PUBLIC_HOST + "/api/profile";
+  const host =
+    process.env.NEXT_PUBLIC_HOST
+      ? `${process.env.NEXT_PUBLIC_HOST}/api/profile`  // For local development
+      : "/api/profile";  // For production (relative URL)
+      
   const res = await fetch(host, {
     cache: "no-store",
     headers: {

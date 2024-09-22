@@ -3,6 +3,8 @@ import Completed from "@/components/Page/Completed";
 
 export default async function Page() {
   const host = process.env.NEXT_PUBLIC_HOST + "/api/taskslist/completed";
+  // const host = "/api/taskslist/completed";
+  
   const res = await fetch(host, {
     cache: "no-store",
     headers: {

@@ -3,6 +3,7 @@ import DoItNow from "@/components/Page/DoItNow";
 
 export default async function Page() {
   const host = process.env.NEXT_PUBLIC_HOST + "/api/taskslist/doitnow";
+  // const host = "/api/taskslist/doitnow";
   const res = await fetch(host, {
     cache: "no-store",
     headers: {

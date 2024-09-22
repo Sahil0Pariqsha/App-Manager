@@ -2,8 +2,10 @@ import { cookies } from "next/headers";
 import DoItNow from "@/components/Page/DoItNow";
 
 export default async function Page() {
-  const host = process.env.NEXT_PUBLIC_HOST + "/api/taskslist/doitnow";
-  // const host = "/api/taskslist/doitnow";
+  const host = process.env.NEXT_PUBLIC_HOST
+  ? `${process.env.NEXT_PUBLIC_HOST}/api/taskslist/doitnow`  // For local development
+  : "/api/taskslist/doitnow";  // For production (relative URL)
+  
   const res = await fetch(host, {
     cache: "no-store",
     headers: {

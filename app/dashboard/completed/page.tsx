@@ -2,8 +2,9 @@ import { cookies } from "next/headers";
 import Completed from "@/components/Page/Completed";
 
 export default async function Page() {
-  const host = process.env.NEXT_PUBLIC_HOST + "/api/taskslist/completed";
-  // const host = "/api/taskslist/completed";
+  const host = process.env.NEXT_PUBLIC_HOST
+  ? `${process.env.NEXT_PUBLIC_HOST}/api/taskslist/completed`  // For local development
+  : "/api/taskslist/completed";  // For production (relative URL)
   
   const res = await fetch(host, {
     cache: "no-store",

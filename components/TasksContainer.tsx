@@ -18,7 +18,7 @@ const TasksContainer = ({ title, taskList, loading }: any) => {
         </div>
         <div>
           <button
-            className="h-[50px] w-[50px] rounded-full border-2 border-[#323232]  text-[#5c5c5c] hover:text-[#b3b3b3] hover:border-[#9a9a9a]"
+            className="h-[50px] w-[50px] rounded-full border-2 border-[#323232]  text-[#5c5c5c] hover:text-[#b3b3b3] hover:border-[#9a9a9a] flex justify-center items-center"
             onClick={() => setShowTaskModal((prev) => !prev)}
           >
             <i className="fa-solid fa-plus text-[28px] "></i>

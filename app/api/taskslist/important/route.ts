@@ -1,9 +1,12 @@
+import dbConnect from "@/lib/dbconnect";
 import userTasks from "@/models/userTasks";
 import { extractTokenPayload } from "@/utils/functions";
 import { cookies } from "next/headers";
 import { NextRequest } from "next/server";
 
 export async function GET() {
+  await dbConnect();
+
   try {
     const auth = cookies().get("userToken") || ("" as any);
     if (!auth) {
@@ -37,6 +40,8 @@ export async function GET() {
 }
 
 export async function PATCH(req: Request | NextRequest) {
+  await dbConnect();
+
   try {
     const urlParams = new URL(req.url!);
     const taskId = urlParams.searchParams.get("id");

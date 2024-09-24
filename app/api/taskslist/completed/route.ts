@@ -1,8 +1,11 @@
+import dbConnect from "@/lib/dbconnect";
 import userTasks from "@/models/userTasks";
 import { extractTokenPayload } from "@/utils/functions";
 import { NextRequest } from "next/server";
 
 export async function GET(request: any) {
+  await dbConnect();
+
   try {
     const auth = request.cookies.get("userToken") || "";
     if (!auth) {
@@ -36,6 +39,8 @@ export async function GET(request: any) {
 }
 
 export async function DELETE(req: Request | NextRequest) {
+  await dbConnect();
+
   try {
     const urlParams = new URL(req.url!);
     const taskId = urlParams.searchParams.get("id");
@@ -76,6 +81,8 @@ export async function DELETE(req: Request | NextRequest) {
 }
 
 export async function PATCH(req: Request | NextRequest) {
+  await dbConnect();
+
   // console.log("Patch Req");
   try {
     const urlParams = new URL(req.url!);

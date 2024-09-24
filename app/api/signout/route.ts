@@ -1,7 +1,10 @@
+import dbConnect from "@/lib/dbconnect";
 import { cookies } from "next/headers";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(request: Request | NextRequest) {
+  await dbConnect();
+
   try {
     const auth = cookies().get("userToken") || "";
     if (!auth) {

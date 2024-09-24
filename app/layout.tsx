@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import "./globals.css";
 import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer } from "react-toastify";
-import dbConnect from "@/lib/dbconnect";
 
 export const metadata: Metadata = {
   title: "Task Manager App",
@@ -13,7 +12,6 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  dbConnect();
   return (
     <html lang="en">
       <head>

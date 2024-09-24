@@ -1,9 +1,12 @@
+import dbConnect from "@/lib/dbconnect";
 import user from "@/models/user";
 import jwt from "jsonwebtoken";
 import { cookies } from "next/headers";
 import { NextRequest } from "next/server";
 
 export async function GET(request: Request | NextRequest) {
+  await dbConnect();
+  
   try {
     const auth = cookies().get("userToken") || "";
     if (!auth) {

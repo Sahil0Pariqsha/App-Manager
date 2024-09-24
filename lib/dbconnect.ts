@@ -6,7 +6,7 @@ declare global {
 
 const dbConnect = async () => {
   try {
-    console.log("DB URI :", process.env.MONGODB_URI);
+    // console.log("DB URI :", process.env.MONGODB_URI);
     if (global.mongoConnection) {
       console.log("Already connected");
       return global.mongoConnection;

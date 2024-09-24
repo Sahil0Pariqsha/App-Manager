@@ -14,15 +14,12 @@ import {
 import userTasks from "@/models/userTasks";
 import { revalidatePath } from "next/cache";
 
-dbConnect();
-// console.log(global.mongoConnection);
-
 /*------- Sign Up user Action -------*/
 export const handleSignUpAction = async (
   prevState: any,
   formData: FormData
 ): Promise<FormDataErrors> => {
-  // await dbConnect();
+  await dbConnect();
   const rawFormData = {
     Name: formData.get("name"),
     Email: formData.get("email"),
@@ -89,7 +86,7 @@ export const handleLogInAction = async (
   prevState: any,
   formData: FormData
 ): Promise<FormDataErrors> => {
-  // await dbConnect();
+  await dbConnect();
   const errors: Partial<FormDataErrors> = {};
 
   const rawFormData = {
@@ -155,6 +152,8 @@ export const handleAddTaskAction = async (
   prevState: any,
   formData: FormData
 ): Promise<AddTaskFormErrors> => {
+  dbConnect();
+
   const errors: Partial<AddTaskFormErrors> = {};
 
   let rawFormData = {
@@ -221,6 +220,7 @@ export const handleUpdateTaskAction = async (
   prevState: any,
   formData: FormData
 ): Promise<AddTaskFormErrors> => {
+  dbConnect();
   const errors: Partial<AddTaskFormErrors> = {};
 
   let rawFormData = {
@@ -286,6 +286,7 @@ export const handleUpdateUserProfileAction = async (
   prevState: any,
   formData: FormData
 ): Promise<UpdateUserProfileErrors> => {
+  dbConnect();
   const errors: Partial<UpdateUserProfileErrors> = {};
 
   const rawFormData = {
@@ -362,6 +363,5 @@ export const handleUpdateUserProfileAction = async (
 };
 
 export async function revalidate(pathName: string) {
-  // console.log("revalidate server action path ----> ", pathName);
   revalidatePath(pathName);
 }
